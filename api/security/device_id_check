@@ -1,0 +1,54 @@
+<?php
+include_once "../../php/database/connection.php";
+header("content-type: application/json");
+
+if(isset($_POST['device_id']) && !empty($_POST['device_id'])){
+
+    $device_id = $connection->real_escape_string(mysql_entities_fix_string($_POST['device_id']));
+        $sql = "SELECT * FROM `app_device` WHERE `device_id`='$device_id'";
+        if ($res = $connection->query($sql)){
+            if ($res->num_rows == 0){
+                $response =[
+                        "status" => false,
+                        'message' => 'Something Wrong With Your Device',
+                        'code' => 400,
+                        'data'=>null,
+                    ];
+                    http_response_code(400);
+                    echo json_encode($response);
+                    die();
+            }
+        }else{
+            $response =[
+                        "status" => false,
+                        'message' => 'Something Went Wrong',
+                        'code' => 400,
+                        'data'=>null,
+                    ];
+                    http_response_code(400);
+                    echo json_encode($response);
+                    die();
+        }
+   
+    }else{
+        $response =[
+                        "status" => false,
+                        'message' => 'Device Id Can not be Empy',
+                        'code' => 400,
+                        'data'=>null,
+                    ];
+                    http_response_code(400);
+                    echo json_encode($response);
+                    die();
+    }
+
+
+
+
+function mysql_entities_fix_string($string){return htmlentities(mysql_fix_string($string));}
+function mysql_fix_string($string){
+    if (get_magic_quotes_gpc()) 
+        $string = stripslashes($string);
+    return $string;
+}
+?>

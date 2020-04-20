@@ -1,0 +1,7 @@
+
+[23-Jul-2019 02:28:33 UTC] PHP Warning:  mysqli::__construct(): (28000/1045): Access denied for user 'santirekha'@'localhost' (using password: YES) in /home/gimq2x1rc3oo/public_html/app/php/database/connection.php on line 12
+[23-Jul-2019 02:28:33 UTC] PHP Notice:  Undefined variable: conn in /home/gimq2x1rc3oo/public_html/app/php/database/connection.php on line 14
+[23-Jul-2019 02:28:33 UTC] PHP Notice:  Trying to get property 'connect_error' of non-object in /home/gimq2x1rc3oo/public_html/app/php/database/connection.php on line 14
+[23-Jul-2019 05:47:37 UTC] PHP Warning:  mysqli::__construct(): (28000/1045): Access denied for user 'santirekha'@'localhost' (using password: YES) in /home/gimq2x1rc3oo/public_html/app/php/database/connection.php on line 12
+[23-Jul-2019 05:47:37 UTC] PHP Notice:  Undefined variable: conn in /home/gimq2x1rc3oo/public_html/app/php/database/connection.php on line 14
+[23-Jul-2019 05:47:37 UTC] PHP Notice:  Trying to get property 'connect_error' of non-object in /home/gimq2x1rc3oo/public_html/app/php/database/connection.php on line 14

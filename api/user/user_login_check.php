@@ -11,12 +11,10 @@
     		$user=$user_res->fetch_assoc();
     		if ($user_res->num_rows > 0) {
     			if ($user['status'] == '2') {
-    				$data = [];
     				$response =[
 						"status" => false,
 						'message' => 'Sorry Your Account is Deactivated Please Contact Administrator',
-						'code' => 200,
-						'data' =>$data_user,
+						'data' =>null,
 					];
 					http_response_code(200);
 					echo json_encode($response,JSON_NUMERIC_CHECK);
@@ -41,7 +39,6 @@
 	    			$response =[
 						"status" => true,
 						'message' => 'Login Successfull',
-						'code' => 200,
 						'data' =>$data_user,
 					];
 					http_response_code(200);
@@ -50,11 +47,10 @@
 	    		}else{
 	    			$response =[
 						"status" => false,
-						'message' => 'Password Does Not Matched',
-						'code' => 400,
+						'message' => 'User Id or Password Wrong Please Try Again',
 						'data' =>null,
 					];
-					http_response_code(400);
+					http_response_code(200);
 					echo json_encode($response,JSON_NUMERIC_CHECK);
 					die();
 	    		}
@@ -62,11 +58,10 @@
     		}else{
     			$response =[
 						"status" => false,
-						'message' => 'User Not Found',
-						'code' => 400,
+						'message' => 'User Id or Password Wrong Please Try Again',
 						'data' =>null,
 					];
-					http_response_code(400);
+					http_response_code(200);
 					echo json_encode($response,JSON_NUMERIC_CHECK);
 					die();
     		}
@@ -75,10 +70,9 @@
     		$response =[
 					"status" => false,
 					'message' => 'Something Went Wrong Please try Again',
-					'code' => 400,
 					'data' =>null,
 				];
-			http_response_code(400);
+			http_response_code(200);
 			echo json_encode($response,JSON_NUMERIC_CHECK);
 			die();
     	}
@@ -86,10 +80,9 @@
  		$response =[
 					"status" => false,
 					'message' => 'Email And Password Can Not Be Empty',
-					'code' => 400,
 					'data' =>null,
 				];
-		http_response_code(400);
+		http_response_code(200);
 		echo json_encode($response,JSON_NUMERIC_CHECK);
  	}
 

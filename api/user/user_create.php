@@ -24,9 +24,9 @@
  				$response =[
 				"status" => false,
 				'message' => 'Email Id Already Exist',
-				'code' => 401,
+				'data' => null,
 				];
-				http_response_code(401);
+				http_response_code(200);
 				echo json_encode($response);
 				die();
  			} 			
@@ -38,9 +38,9 @@
  				$response =[
 				"status" => false,
 				'message' => 'Mobile Number Already Exist',
-				'code' => 401,
+				'data' => null,
 				];
-				http_response_code(401);
+				http_response_code(200);
 				echo json_encode($response);
 				die();
  			} 			
@@ -53,9 +53,9 @@
 		 			$response =[
 					"status" => false,
 					'message' => 'Referal Code Invalid',
-					'code' => 401,
+					'data' => null,
 					];
-					http_response_code(401);
+					http_response_code(200);
 					echo json_encode($response);
 					die();
 		 		}else{
@@ -67,9 +67,9 @@
 	 				$response =[
 					"status" => false,
 					'message' => 'Referal Code Invalid',
-					'code' => 401,
+					'data' => null,
 					];
-					http_response_code(401);
+					http_response_code(200);
 					echo json_encode($response);
 					die();
 	 					
@@ -117,7 +117,6 @@
 	 		$response =[
 				"status" => true,
 				'message' => 'User Created Successfully',
-				'code' => 200,
 				'data' => $data_user,
 				];
 				http_response_code(200);
@@ -127,9 +126,9 @@
 	 		$response =[
 				"status" => false,
 				'message' => 'Something Went Wrong Please Try Again',
-				'code' => 401,
+				'data' => null,
 				];
-				http_response_code(401);
+				http_response_code(200);
 				echo json_encode($response);
 				die();
 	 	}
@@ -137,9 +136,9 @@
  		$response =[
 				"status" => false,
 				'message' => 'Please Check Required Fields',
-				'code' => 400,
+				'data' => null,
 				];
-				http_response_code(400);
+				http_response_code(200);
 				echo json_encode($response);
 				die();
  	}

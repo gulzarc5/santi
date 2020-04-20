@@ -75,11 +75,11 @@
 	 					
 		 	}
 	 	}
-
+		 $date = date('Y-m-d H:i:s');
 	 	if (!empty($referal_code)) {
-	 		$sql_insert = "INSERT INTO `users`(`id`, `parent_id`, `refferel`, `name`, `email`, `mobile`, `state`, `city`, `address`, `password`, `user_type`, `date`) VALUES (null,'$ref_user_id','$referal_code','$name','$email','$mobile','$state','$city','$address','$password','2',date('now'))";
+	 		$sql_insert = "INSERT INTO `users`(`id`, `parent_id`, `refferel`, `name`, `email`, `mobile`, `state`, `city`, `address`, `password`, `user_type`, `date`) VALUES (null,'$ref_user_id','$referal_code','$name','$email','$mobile','$state','$city','$address','$password','2','$date')";
 	 	}else{
-	 		$sql_insert = "INSERT INTO `users`(`id`, `parent_id`, `refferel`, `name`, `email`, `mobile`, `state`, `city`, `address`, `password`, `user_type`, `date`) VALUES (null,null,null,'$name','$email','$mobile','$state','$city','$address','$password','2',date('now'))";
+	 		$sql_insert = "INSERT INTO `users`(`id`, `parent_id`, `refferel`, `name`, `email`, `mobile`, `state`, `city`, `address`, `password`, `user_type`, `date`) VALUES (null,null,null,'$name','$email','$mobile','$state','$city','$address','$password','2','$date')";
 	 	}
 	 	
 	 	

@@ -106,8 +106,10 @@ function mysql_fix_string($string){
 
                   <li><a><i class="fa fa-edit"></i> Product Category <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="add_category_form.php">Add Product Category</a></li>
-                      <li><a href="category_list.php">Category List</a></li>
+                      <li><a href="add_main_category_form.php">Add Main Category</a></li>
+                      <li><a href="main_category_list.php">Main Category List</a></li>
+                      <li><a href="add_category_form.php">Add Sub Category</a></li>
+                      <li><a href="category_list.php">Sub Category List</a></li>
                     </ul>
                   </li>
                 <li><a><i class="fa fa-edit"></i> App Slider <span class="fa fa-chevron-down"></span></a>

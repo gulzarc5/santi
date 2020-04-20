@@ -17,16 +17,15 @@ function showMessage($msg){
   }
 
 function getCategory($connection){
-  $sql = "SELECT `sub_category`.`name` AS sub_name,`sub_category`.`image` AS image, `sub_category`.`id` AS sub_cat_id, `category`.`name` AS cat_name FROM `sub_category` INNER JOIN `category` ON `category`.`id`=`sub_category`.`category_id`";
+  $sql = "SELECT * FROM `category`";
   if ($res = $connection->query($sql)) {
     $sl_count = 1;
     while($category = $res->fetch_assoc()){
       print '<tr>
                 <td>'.$sl_count.'</td>
-                <td>'.$category['sub_name'].'</td>
-                <td>'.$category['cat_name'].'</td>
-                <td><img src="uploads/sub_category/thumb/'.$category['image'].'" height="60"></td>
-                <td><a href="edit_cat.php?sub_id='.$category['sub_cat_id'].'" class="btn btn-success">Edit</a>
+                <td>'.$category['name'].'</td>
+                <td><img src="uploads/main_category/thumb/'.$category['image'].'" height="60"></td>
+                <td><a href="edit_main_category.php?main_id='.$category['id'].'" class="btn btn-success">Edit</a>
                 </td>
              </tr>';
       $sl_count++;
@@ -42,7 +41,7 @@ function getCategory($connection){
            <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>All Category<small></small></h2>
+                    <h2>Main Category List<small></small></h2>
                     <div class="clearfix"></div>
                       <?php 
                         if (isset($_GET['msg'])) {
@@ -56,8 +55,7 @@ function getCategory($connection){
                       <thead>
                         <tr>
                           <th>Sl</th>
-                          <th>Sub Category</th>
-                          <th>Main Category</th>
+                          <th>Category Name</th>
                           <th>Image</th>
                           <th>Action</th>
                           <!-- <th>Actions</th> -->

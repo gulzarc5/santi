@@ -33,7 +33,7 @@
                   $fetch_sub_row = $fetch_sub_res->fetch_assoc();
                
             ?>
-            <form  class="form-horizontal form-label-left" action="php/product_category/update_category.php" method="post">
+            <form  class="form-horizontal form-label-left" action="php/product_category/update_category.php" method="post" enctype="multipart/form-data">
               <input type="hidden" name="sub_id" value="<?php echo $fetch_sub_row['id']; ?>">
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Select Category <span class="required">*</span>
@@ -65,6 +65,22 @@
                   <input type="text" required="required" class="form-control col-md-7 col-xs-12" name="sub_category" value="<?php echo $fetch_sub_row['name'] ?>">
                 </div>
               </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Main Category Image <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input type="file" class="form-control col-md-7 col-xs-12" name="image" onchange="readURL(this);">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <img src="uploads/sub_category/thumb/<?php echo $fetch_sub_row['image'] ?>" alt="" height="100" id="preview"> 
+                </div>
+              </div>
              
               <div class="ln_solid"></div>
                 <div class="form-group">
@@ -87,3 +103,19 @@
 <?php
 include "include/footer.php";
 ?>
+
+<script>
+ function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#preview')
+                .attr('src', e.target.result)
+                .height(120);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+  }
+</script>

@@ -20,7 +20,6 @@
                 	$response =[
 							"status" => true,
 							'message' => 'Downline List',
-							'code' => 200,
 							'data'=> $data,
 							];
 						http_response_code(200);
@@ -32,10 +31,9 @@
 			 		$response =[
 							"status" => false,
 							'message' => 'No Downlines Found',
-							'code' => 400,
 							'data'=> $data,
 							];
-					http_response_code(400);
+					http_response_code(200);
 					echo json_encode($response);
 					die();
             	}
@@ -43,26 +41,24 @@
             }else{
             	$data = [];
 		 		$response =[
-						"status" => false,
-						'message' => 'Please Check Required Fields',
-						'code' => 400,
-						'data'=> $data,
-						];
-				http_response_code(400);
+					"status" => false,
+					'message' => 'Please Check Required Fields',
+					'data'=> $data,
+				];
+				http_response_code(200);
 				echo json_encode($response);
 				die();
             }      
  	}else{
  		$data = [];
  		$response =[
-				"status" => false,
-				'message' => 'Please Check Required Fields',
-				'code' => 400,
-				'data'=> $data,
-				];
-				http_response_code(400);
-				echo json_encode($response);
-				die();
+			"status" => false,
+			'message' => 'Please Check Required Fields',
+			'data'=> $data,
+		];
+		http_response_code(200);
+		echo json_encode($response);
+		die();
  	}
 
  

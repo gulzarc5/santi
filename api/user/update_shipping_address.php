@@ -33,9 +33,8 @@
  			$response =[
 				"status" => false,
 				'message' => 'Something Went Wrong Please Try Again',
-				'code' => 400,
 				];
-				http_response_code(400);
+				http_response_code(200);
 				echo json_encode($response);
 				die();
  		}
@@ -43,11 +42,10 @@
  		$response =[
 				"status" => false,
 				'message' => 'Please Check Required Fields',
-				'code' => 400,
-				];
-				http_response_code(400);
-				echo json_encode($response);
-				die();
+		];
+		http_response_code(200);
+		echo json_encode($response);
+		die();
  	}
 
 

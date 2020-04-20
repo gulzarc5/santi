@@ -21,7 +21,6 @@
                        $response =[
                         "status" => true,
                         'message' => 'Password Changed Successfully',
-                        'code' => 200,
                         ];
                         http_response_code(200);
                         echo json_encode($response,JSON_NUMERIC_CHECK);
@@ -30,9 +29,8 @@
                      $response =[
                         "status" => false,
                         'message' => 'Something Went Wrong',
-                        'code' => 400,
                     ];
-                    http_response_code(400);
+                    http_response_code(200);
                     echo json_encode($response,JSON_NUMERIC_CHECK);
                     die();
                    }
@@ -42,9 +40,8 @@
                     $response =[
                         "status" => false,
                         'message' => 'Password Does Not Matched',
-                        'code' => 400,
                     ];
-                    http_response_code(400);
+                    http_response_code(200);
                     echo json_encode($response,JSON_NUMERIC_CHECK);
                     die();
                 }
@@ -52,9 +49,8 @@
                 $response =[
                         "status" => false,
                         'message' => 'User Not Found',
-                        'code' => 400,
                     ];
-                    http_response_code(400);
+                    http_response_code(200);
                     echo json_encode($response,JSON_NUMERIC_CHECK);
                     die();
             }
@@ -62,9 +58,8 @@
             $response =[
                         "status" => false,
                         'message' => 'Something Went Wrong',
-                        'code' => 400,
                     ];
-                    http_response_code(400);
+                    http_response_code(100);
                     echo json_encode($response,JSON_NUMERIC_CHECK);
                     die();
         }
@@ -72,10 +67,8 @@
  		$response =[
 					"status" => false,
 					'message' => 'Required Field Can Not Be Empty',
-					'code' => 400,
-					'data' =>null,
 				];
-		http_response_code(400);
+		http_response_code(200);
 		echo json_encode($response,JSON_NUMERIC_CHECK);
  	}
 

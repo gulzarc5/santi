@@ -22,9 +22,8 @@
 				$response =[
 					"status" => false,
 					'message' => 'Api Key Not Found',
-					'code' => 400,
 				];
-				http_response_code(400);
+				http_response_code(200);
 				echo json_encode($response,JSON_NUMERIC_CHECK);
 				die();
 			}
@@ -32,9 +31,8 @@
 			$response =[
 					"status" => false,
 					'message' => 'Api Key Not Found',
-					'code' => 400,
 				];
-			http_response_code(400);
+			http_response_code(200);
 			echo json_encode($response,JSON_NUMERIC_CHECK);
 			die();
 		}
@@ -42,10 +40,9 @@
 		$response =[
 					"status" => false,
 					'message' => 'Api Key And User Id Can Not Be Empty',
-					'code' => 400,
 					'data' =>null,
 				];
-		http_response_code(400);
+		http_response_code(200);
 		echo json_encode($response,JSON_NUMERIC_CHECK);
 		die();
 	}

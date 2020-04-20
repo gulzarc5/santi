@@ -26,7 +26,6 @@
  				$response =[
 				"status" => true,
 				'message' => 'Shipping Address List',
-				'code' => 200,
 				'data' => $data,
 				];
 				http_response_code(200);
@@ -37,7 +36,6 @@
  				$response =[
 				"status" => false,
 				'message' => 'No Address Found Please Add New Shipping Address',
-				'code' => 200,
 				'data' => $data,
 				];
 				http_response_code(200);
@@ -50,10 +48,9 @@
  			$response =[
 				"status" => false,
 				'message' => 'Something Went Wrong',
-				'code' => 400,
 				'data' => $data,
 				];
-				http_response_code(400);
+				http_response_code(200);
 				echo json_encode($response);
 				die();
  		}
@@ -63,10 +60,9 @@
  		$response =[
 				"status" => false,
 				'message' => 'Please Check Required Fields',
-				'code' => 400,
 				'data' => $data,
 				];
-				http_response_code(400);
+				http_response_code(200);
 				echo json_encode($response);
 				die();
 

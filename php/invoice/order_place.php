@@ -146,6 +146,14 @@
 
 							$sql_update_order = "UPDATE `orders` SET `amount`='$total_amount',`wallet_pay`='$wallet_pay',`sgst` = '$total_sgst',`cgst` = '$total_cgst',`total`='$Payable_amount',`cashback`='$total_cashback' WHERE `id`='$order_id'";
 							if ($res_order_update = $connection->query($sql_update_order)) {
+								if (!empty($user_id) && ($total_cashback > 0 )) {
+									cashbackCredit($user_id,$total_cashback,$connection);
+								}
+
+								if (!empty($user_row['parrent_id'])) {
+									promotionalCredit($user_row['parrent_id'],$total_promotional_bonus,$connection)
+								}
+
 								$sql_cart_delete = "DELETE FROM `temp_invoice`";
 								$connection->query($sql_cart_delete);
 								if (isset($_SESSION['invoice_user'])) {
@@ -160,14 +168,22 @@
 					}else{
 						$sql_update_order = "UPDATE `orders` SET `amount`='$total_amount',`wallet_pay`='0',`sgst` = '$total_sgst',`cgst` = '$total_cgst',`total`='$Payable_amount',`cashback`='$total_cashback' WHERE `id`='$order_id'";
 						if ($res_order_update = $connection->query($sql_update_order)) {
-								$sql_cart_delete = "DELETE FROM `temp_invoice`";
-								$connection->query($sql_cart_delete);
-								if (isset($_SESSION['invoice_user'])) {
-									unset($_SESSION['invoice_user']);
-								}
-								if (isset($_SESSION['is_wallet'])) {
-									unset($_SESSION['is_wallet']);
-								}
+							if (!empty($user_id) && ($total_cashback > 0 )) {
+								cashbackCredit($user_id,$total_cashback,$connection);
+							}
+
+							if (!empty($user_row['parrent_id']) && ($total_promotional_bonus > 0 )) {
+								promotionalCredit($user_row['parrent_id'],$total_promotional_bonus,$connection)
+							}
+
+							$sql_cart_delete = "DELETE FROM `temp_invoice`";
+							$connection->query($sql_cart_delete);
+							if (isset($_SESSION['invoice_user'])) {
+								unset($_SESSION['invoice_user']);
+							}
+							if (isset($_SESSION['is_wallet'])) {
+								unset($_SESSION['is_wallet']);
+							}
 						}
 
 					}
@@ -189,6 +205,47 @@
  	
  	}else{
  		header("location:../../make_invoice_form.php?msg=2");
- 	}
+	 }
+	 
+
+	 function cashbackCredit($user_id,$amount,$connection){
+		date_default_timezone_set('Asia/Kolkata');
+		$date = date('Y-m-d');
+		$time = date('H:i:s');
+
+		$wallet_amount_sql = "SELECT * FROM `wallet` WHERE `user_id`='$user_id' AND `status` = '1'";
+		if ($res_wallet_amount = $connection->query($wallet_amount_sql)) {
+			if ($res_wallet_amount->num_rows > 0) {
+				$wallet_amount = $wallet_amount_row['amount']+$amount;
+				$sql_update_wallet = "UPDATE `wallet` SET `amount`='$wallet_amount' WHERE `user_id` = '$user_id'";
+				if ($res_wallet_update = $connection->query($sql_update_wallet)) {
+					$sql_wallet_history = "INSERT INTO `wallet_history`(`id`, `user_id`,`wallet_id`, `transaction_type`, `amount`,`total`, `comments`, `date`, `time`) VALUES (null,'$user_id','$wallet_amount_row[id]','2','$amount','$wallet_amount','Product Purchased Cashback Credited','$date','$time')";
+					if ($res_wallet_history = $connection->query($sql_wallet_history)) {}
+				}
+			}
+		}
+
+		return true;
+	 }
+
+	 function promotionalCredit($user_id,$amount,$connection){
+		date_default_timezone_set('Asia/Kolkata');
+		$date = date('Y-m-d');
+		$time = date('H:i:s');
+
+		$wallet_amount_sql = "SELECT * FROM `wallet` WHERE `user_id`='$user_id' AND `status` = '1'";
+		if ($res_wallet_amount = $connection->query($wallet_amount_sql)) {
+			if ($res_wallet_amount->num_rows > 0) {
+				$wallet_amount = $wallet_amount_row['amount']+$amount;
+				$sql_update_wallet = "UPDATE `wallet` SET `amount`='$wallet_amount' WHERE `user_id` = '$user_id'";
+				if ($res_wallet_update = $connection->query($sql_update_wallet)) {
+					$sql_wallet_history = "INSERT INTO `wallet_history`(`id`, `user_id`,`wallet_id`, `transaction_type`, `amount`,`total`, `comments`, `date`, `time`) VALUES (null,'$user_id','$wallet_amount_row[id]','2','$amount','$wallet_amount','Promotional Bonus Credited Against Your Downline Purchase','$date','$time')";
+					if ($res_wallet_history = $connection->query($sql_wallet_history)) {}
+				}
+			}
+		}
+
+		return true;
+	 }
 
 ?>

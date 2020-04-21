@@ -24,8 +24,10 @@
 	    			$api_key_sql = "DELETE FROM `api_key` WHERE `user_id`='$user[id]'";
 	    			if ($connection->query($api_key_sql)) {    				# code...
 	    			}
-	    			$key = uniqid('api');
-	    			$api_key_sql = "INSERT INTO `api_key`(`id`, `user_id`, `api_key`, `date`) VALUES (null,'$user[id]','$key',date('now'))";
+					$key = uniqid('api');
+					date_default_timezone_set('Asia/Kolkata');
+					$date = date('Y-m-d H:i:s');
+	    			$api_key_sql = "INSERT INTO `api_key`(`id`, `user_id`, `api_key`, `date`) VALUES (null,'$user[id]','$key','$date')";
 	    			if ($connection->query($api_key_sql)) {
 	    				$data_user = [
 	    				'user_id' => $user['id'],

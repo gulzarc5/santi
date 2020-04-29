@@ -9,20 +9,10 @@
  		if ($res = $connection->query($sql)) {
  			if ($res->num_rows > 0) {
  				$row = $res->fetch_assoc();
- 				$data = [
- 					'id' => $row['id'],
-					'name' => $row['name'],
-					'description' => $row['description'],
-					'mrp' => $row['mrp'],
-					'price' => $row['price'],
-					'stock' => $row['stock'],
-					'image' => $row['image'],
- 				];
 	 			$response =[
 					"status" => true,
 					'message' => 'Product Details',
-					'code' => 200,
-					'data' => $data,
+					'data' => $row,
 					];
 					http_response_code(200);
 					echo json_encode($response);
@@ -45,7 +35,6 @@
 	 		$response =[
 					"status" => false,
 					'message' => 'Something Went Wrong',
-					'code' => 200,
 					'data' => $data,
 					];
 					http_response_code(200);
@@ -57,10 +46,9 @@
  		$response =[
 				"status" => false,
 				'message' => 'Please Check Required Fields',
-				'code' => 400,
 				'data' => $data,
 				];
-				http_response_code(400);
+				http_response_code(200);
 				echo json_encode($response);
 				die();
  	}

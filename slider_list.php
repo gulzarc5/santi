@@ -23,14 +23,16 @@ function getSliders($connection){
     while($slider_row = $res->fetch_assoc()){
       print '<tr>
                 <td>'.$sl_count.'</td>
-                <td><img src="uploads/slider_image/'.$slider_row['image'].'" height="100px" width="150px"></td>';
+                <td><img src="uploads/slider_image/'.$slider_row['image'].'" height="100px"></td>
+                <td>'.$slider_row['title'].'</td>';
       if ($slider_row['status'] == '1') {
         print '<td><a class="btn btn-primary" disabled>Enabled</a></td>';
       }else{
          print '<td><a class="btn btn-danger" disabled>Disabled</a></td>';
       }
 
-        print '<td><a href="php/slider/delete_slider.php?id='.$slider_row['id'].'" class="btn btn-danger">Delete</a>';
+        print '<td><a href="php/slider/delete_slider.php?id='.$slider_row['id'].'" class="btn btn-danger">Delete</a>
+        <a href="edit_slider.php?id='.$slider_row['id'].'" class="btn btn-warning">Edit</a>';
         if ($slider_row['status'] == '1') {
           print '<a href="php/slider/update_slider_status.php?id='.$slider_row['id'].'&status=2" class="btn btn-danger">Deactivate</a>';
         }else{
@@ -65,7 +67,8 @@ function getSliders($connection){
                       <thead>
                         <tr>
                           <th>Sl</th>
-                          <th>Image</th>
+                          <th>Image</th>                          
+                          <th>Slider Title</th>
                           <th>Status</th>
                           <th>Action</th>
                           <!-- <th>Actions</th> -->

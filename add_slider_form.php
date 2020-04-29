@@ -33,9 +33,14 @@
           </div>
           <div class="x_content"><br />
             <form  class="form-horizontal form-label-left" action="php/slider/add_slider.php" method="post" enctype="multipart/form-data">
-             
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image">Title</label>
+                <div class="col-md-5 col-sm-5 col-xs-12">
+                  <input type="text" placeholder="Enter Title" name="title" class="form-control col-md-5 col-xs-12">
+                </div>
+              </div>
 
-               <div class="form-group">
+              <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image">Product Image
                 </label>
                 <div class="col-md-5 col-sm-5 col-xs-12">

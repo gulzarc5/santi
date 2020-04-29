@@ -41,10 +41,11 @@
 						$data[] = [
 							'id' => $row_product['id'],
 							'name' => $row_product['name'],
-							'description' => $row_product['description'],
 							'mrp' => $row_product['mrp'],
 							'price' => $row_product['price'],
-							'stock' => $row_product['stock'],
+							'cash_back' => $row_product['cash_back'],
+							'promotional_bonus' => $row_product['promotional_bonus'],
+							'is_star_product' => $row_product['is_star_product'],
 							'image' => $row_product['image'],
 						];
 
@@ -52,7 +53,6 @@
 					$response =[
 						"status" => true,
 						'message' => 'Product List',
-						'code' => 200,
 						'total_page' => $total_page,
 						'search_key' => $search_key,
 						'data' =>$data,
@@ -65,7 +65,6 @@
 					$response =[
 						"status" => false,
 						'message' => 'Product Not Found',
-						'code' => 200,
 						'total_page' => $total_page,
 						'search_key' => $search_key,
 						'data' =>$product,
@@ -78,7 +77,6 @@
 				$response =[
 					"status" => false,
 					'message' => 'Something Went Wrong',
-					'code' => 200,
 					'total_page' => 0,
 					'search_key' => $search_key,
 					'data' =>$product,
@@ -93,7 +91,6 @@
 				$response =[
 					"status" => false,
 					'message' => 'Something Went Wrong',
-					'code' => 200,
 					'total_page' => 0,
 					'search_key' => $search_key,
 					'data' =>$product,
@@ -107,11 +104,10 @@
 				$response =[
 					"status" => false,
 					'message' => 'Search_key And Page No. Can Not Be Empty',
-					'code' => 400,
 					'total_page' => 0,
 					'data' =>$product,
 				];
-				http_response_code(400);
+				http_response_code(200);
 				echo json_encode($response,JSON_NUMERIC_CHECK);
  	}
 

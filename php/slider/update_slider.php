@@ -2,16 +2,16 @@
 include "../admin_login_system/php_user_session_check.php";
 include "../database/connection.php";
 
-if(isset($_POST['submit'])){
+if(isset($_POST['slider_id']) && !empty($_POST['slider_id'])){
 
     $image = $_FILES['image'];
     $title = $_POST['title'];
+    $slider_id = $_POST['slider_id'];
     $image_name = null;
     if (!empty($image['name'])) {
-
         $image_size = $image['size'];
         if ($image_size > 2097152 || $image_size < 2 ) {
-                header("location:../../add_slider_form.php?msg=6");
+                header("location:../../edit_slider.php?msg=6&id=$slider_id");
                 die();
         }
 
@@ -32,23 +32,23 @@ if(isset($_POST['submit'])){
             ak_img_resize($path,$thumb_path, $wmax, $hmax, $ext);
 
 
-            $sql = "INSERT INTO `slider`(`image`,`title`) VALUES ('$image_name','$title')";
-            if ($result=$connection->query($sql)){
-                header("location:../../add_slider_form.php?msg=1");
-            }else{
-                header("location:../../add_slider_form.php?msg=2");
-            }
+            $sql = "UPDATE `slider` SET `image`='$image_name' WHERE `id`='$slider_id'";
+            if ($result=$connection->query($sql)){}
         }else{
-            header("location:../../add_slider_form.php?msg=4");
+            header("location:../../edit_slider.php?msg=4&id=$slider_id");
             die();
         }
-    }else{
-        header("location:../../add_slider_form.php?msg=3");
-            die();
     }
+
+    if (!empty($_POST['title'])) {
+        $sql = "UPDATE `slider` SET `title`='$title'  WHERE `id`='$slider_id'";
+        if ($result=$connection->query($sql)){}
+    }
+
+    header("location:../../edit_slider.php?msg=1&id=$slider_id");
 }else{
-        header("location:../../add_slider_form.php?msg=2");
-    }
+    header("location:../../slider_list.php");
+}
 
 
 

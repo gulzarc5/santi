@@ -14,8 +14,7 @@
  			
  				$response =[
 					"status" => true,
-					'message' => 'Item Deleted From The Cart',
-					'code' => 200,				
+					'message' => 'Item Deleted From The Cart',		
 				];
 				http_response_code(200);
 				echo json_encode($response);
@@ -25,9 +24,8 @@
  			$response =[
 			"status" => false,
 			'message' => 'Something Went Wrong',
-			'code' => 400,
 			];
-			http_response_code(400);
+			http_response_code(200);
 			echo json_encode($response);
 			die();
  		}
@@ -36,9 +34,8 @@
  		$response =[
 			"status" => false,
 			'message' => 'Required Field Can Not Be Empty',
-			'code' => 400,
 		];
-		http_response_code(400);
+		http_response_code(200);
 		echo json_encode($response);
  	}
  ?>

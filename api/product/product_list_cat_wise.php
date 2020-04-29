@@ -36,10 +36,11 @@
 						$data[] = [
 							'id' => $row['id'],
 							'name' => $row['name'],
-							'description' => $row['description'],
 							'mrp' => $row['mrp'],
 							'price' => $row['price'],
-							'stock' => $row['stock'],
+							'cash_back' => $row['cash_back'],
+							'promotional_bonus' => $row['promotional_bonus'],
+							'is_star_product' => $row['is_star_product'],
 							'image' => $row['image'],
 						];
 					}
@@ -58,7 +59,6 @@
 		 			$response =[
 						"status" => false,
 						'message' => 'Product Not Found',
-						'code' => 200,
 						'total_page' => null,
 						'data' => $data,
 						];
@@ -86,7 +86,6 @@
  			$response =[
 				"status" => false,
 				'message' => 'Something Went Wrong',
-				'code' => 200,
 				'total_page' => null,
 				'data' => $data,
 				];
@@ -100,11 +99,10 @@
  		$response =[
 				"status" => false,
 				'message' => 'Please Check Required Fields',
-				'code' => 400,
 				'total_page' => null,
 				'data' => $data,
 				];
-				http_response_code(400);
+				http_response_code(200);
 				echo json_encode($response);
 				die();
  	}

@@ -13,6 +13,7 @@
 			$sliders[] = [
 			'id' => $slider['id'],
 			'image' => $slider['image'],
+			'title' => $slider['title'],
 			];
 		}
 	}

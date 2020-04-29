@@ -90,15 +90,17 @@
                     </label>
                     <input type="text" name="user_data" required="required" class="form-control col-md-7 col-xs-12" placeholder="Enter Customer Mobile Number/Email" onblur="userSearch();" id="user_data">
                     <br><span id="user_error"></span>
+                    <br><span id="loader_customer" style="display: flex;"></span>
                 </div>
                 <div class="form-group" id="wallet_pay_div">
                 </div>
               <?php  } ?>
 
               <div class="form-group">
-                <label for="email" class="control-label">Enter Product ID :</label>
+                <label for="email" class="control-label">Enter Product Barcode :</label>
                 <input  class="form-control" type="number" name="bar_code" id="barcode" required autofocus="" onblur="productSearch();">
-                <br><span id="product_error"></span>
+                <br><span id="product_error"></span>                
+                <br><span id="loader_product" style="display: flex;"></span>
               </div>
 
               <div class="form-group">
@@ -290,10 +292,13 @@ include "include/footer.php";
           type: "POST",
           url: "php/ajax/invoice/user_search.php",
           data:{ search_key : search_key,},
+          beforeSend: function() {
+              // setting a timeout
+              $("#loader_customer").html('<i class="fa fa-circle-o-notch fa-spin" style="font-size: 30px;color: #00dcff;text-align: center;margin-top: -18px;"></i>');
+          },
           success: function(data){
-            console.log(data);
+            $("#loader_customer").html('');
             if (data != "2" && data != "3" && data != "4") {
-              console.log(data);
               if (data.status == '1') {
                  $("#user_info").html(data.html);
               }else{
@@ -324,9 +329,13 @@ include "include/footer.php";
       $.ajax({
           type: "POST",
           url: "php/ajax/invoice/product_search.php",
-          data:{ search_key : barcode,},
+          data:{ search_key : barcode,},      
+          beforeSend: function() {
+              // setting a timeout
+              $("#loader_product").html('<i class="fa fa-circle-o-notch fa-spin" style="font-size: 30px;color: #00dcff;text-align: center;margin-top: -18px;"></i>');
+          },
           success: function(data){
-            console.log(data);
+            $("#loader_product").html('');
             if (data != "2" && data != "3") {
               $("#product_info").html(data);
               $("#product_error").html('');

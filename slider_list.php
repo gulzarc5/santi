@@ -1,5 +1,6 @@
 <?php
 require_once "include/header.php";
+date_default_timezone_set('Asia/Kolkata');
 
 function showMessage($msg){
     if ($msg == 3) {

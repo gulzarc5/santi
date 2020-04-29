@@ -1,5 +1,6 @@
 <?php
-  include "include/header.php";
+  include "include/header.php";  
+  date_default_timezone_set('Asia/Kolkata');
   function showMessage($msg){
     if ($msg == 1) {
       print "<p class='alert alert-success'>Order Status Updated Successfully</p>";

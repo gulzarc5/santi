@@ -46,7 +46,7 @@ function mysql_fix_string($string){
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><img src="uploads/santirekhalogo.png" height="50" width="200"></a>
+              <a href="deshboard.php" class="site_title"><img src="uploads/santirekhalogo.png" height="50" width="200"></a>
             </div>
 
             <div class="clearfix"></div>
@@ -92,11 +92,6 @@ function mysql_fix_string($string){
                     </ul>
                   </li>
 
-                  <li><a><i class="fa fa-edit"></i> Report <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="sales_report_form.php">Sales Report</a></li>
-                    </ul>
-                  </li>
 
                   <li><a><i class="fa fa-edit"></i> Discount <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
@@ -118,8 +113,8 @@ function mysql_fix_string($string){
                       <li><a href="slider_list.php">Sliders</a></li>
                     </ul>
                   </li>
-                  <li><a href="customer_review.php"><i class="fa fa-edit"></i> Customers Review </span></a>
-                  </li>
+                  <li><a href="customer_review.php"><i class="fa fa-edit"></i> Customers Review </span></a></li>
+                  <li><a href="star_member_chk.php?page=1" onclick="javascript:return confirm('Are you sure ?? you want to scan manually in the database. if maunaly scan it will not scan automatically in this month')"><i class="fa fa-edit"></i> Star Member Scan</span></a></li>
                 </ul>
               </div>
             </div>

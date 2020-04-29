@@ -59,7 +59,11 @@
                     </div>          
                   </div>
 
-                  <center><a class="btn btn-success" name="search" id="serach_id">Search</a></center>
+                  <center>
+                    <a class="btn btn-success" name="search" id="serach_id">Search</a>
+                    <a class="btn btn-info"  id="export_excel">Export Excel</a></center>
+                  </center>
+                  
                 </form>
               </div>
             
@@ -78,6 +82,7 @@
                   <th>Date</th>
                   <th>Time</th>
                   <th>Status</th>
+                  <th>Order From</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -100,6 +105,11 @@
                         }else{
                           $status = '<p class="btn btn-success disabled">Delivered</p>';
                         }
+                        if ($user_order_row['order_from'] == 2) {
+                          $orderFrom = '<p">Offline</p">';
+                        }else{
+                          $orderFrom = '<p">App</p">';
+                        }
                         $time_format = date("g:i a", strtotime($user_order_row['time']));
                         print "<tr>
                         <td>$count</td>
@@ -110,7 +120,8 @@
                         <td>$payable_amount</td>
                         <td>$user_order_row[date]</td>
                         <td>$time_format</td>
-                        <td>$status</td><td>";
+                        <td>$status</td>                        
+                        <td>$orderFrom</td><td>";
                         print "<a class='btn btn-success' href='view_orders.php?id=$user_order_row[id]&s_date=$s_date&e_date=$e_date''>View</a>";
 
                         if ($user_order_row['status'] == 1) {
@@ -139,6 +150,11 @@
                         }else{
                           $status = '<p class="btn btn-success disabled">Delivered</p>';
                         }
+                        if ($user_order_row['order_from'] == 2) {
+                          $orderFrom = '<p">Offline</p">';
+                        }else{
+                          $orderFrom = '<p">App</p">';
+                        }
                         $time_format = date("g:i a", strtotime($user_order_row['time']));
                         print "<tr>
                         <td>$count</td>
@@ -149,7 +165,9 @@
                         <td>$payable_amount</td>
                         <td>$user_order_row[date]</td>
                         <td>$time_format</td>
-                        <td>$status</td><td>";
+                        <td>$status</td>
+                        <td>$orderFrom</td>
+                        <td>";
                         print "<a class='btn btn-success' href='view_orders.php?id=$user_order_row[id]'>View</a>";
 
                         if ($user_order_row['status'] == 1) {
@@ -223,6 +241,18 @@ include "include/footer.php";
         }
       });
     
+    });
+  });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#export_excel").click(function(){
+      var s_date = $('input[name="s_date"]').val();
+      var e_date = $('input[name="e_date"]').val();
+      var s_time = $('input[name="s_time"]').val();
+      var e_time = $('input[name="e_time"]').val();
+      window.location.href = "php/export/excel_orders_list.php?s_date="+s_date+"&e_date="+e_date+"&s_time="+s_time+"&e_time="+e_time+"";
     });
   });
 </script>

@@ -25,6 +25,14 @@ require_once "include/header.php";
 			<div class="col-md-8 col-sm-5 col-xs-12" style="border:0px solid #e5e5e5;">
 				<h3 class="prod_title"><?php echo $product_row['name'];?></h3>
 				<div class="row product-view-tag">
+				<h5 class="col-md-12 col-sm-12 col-xs-12"><strong>Barcode :</strong> 
+				<?php
+				if (!empty($product_row['barcode'])) {
+					print "<img alt='Image' src='php/barcode/barcode.php?codetype=Code39&size=50&text=$product_row[barcode]&print=true' />";
+				}
+				?>
+				
+				</h5>
 					<h5 class="col-md-6 col-sm-6 col-xs-12"><strong>Product Id :</strong> <?php echo $product_row['id'];?> </h5> 
 					<h5 class="col-md-6 col-sm-6 col-xs-12"><strong>Catagory:</strong> 
 						<?php 

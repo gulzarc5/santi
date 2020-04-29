@@ -22,7 +22,7 @@ if ($res_count = $connection->query($sql_count)) {
 $sql = "SELECT `product`.*,`category`.`name` AS category, `sub_category`.`name` AS sub_category  FROM `product` INNER JOIN `category` ON `category`.`id`=`product`.`category_id` LEFT JOIN `sub_category` ON `sub_category`.`id`=`product`.`sub_cat_id` WHERE (`product`.`is_delete`=1)";
 
 if (!empty($request['search']['value'])) {
-	$sql = $sql." AND (`product`.`name` LIKE '%$srch_key%' OR `category`.`name`  LIKE '%$srch_key%' OR `sub_category`.`name` LIKE '%$srch_key%' OR `product`.`price` LIKE '%$srch_key%' OR `product`.`stock` LIKE '%$srch_key%')";
+	$sql = $sql." AND (`product`.`barcode` LIKE '%$srch_key%' OR `product`.`name` LIKE '%$srch_key%' OR `category`.`name`  LIKE '%$srch_key%' OR `sub_category`.`name` LIKE '%$srch_key%' OR `product`.`price` LIKE '%$srch_key%' OR `product`.`stock` LIKE '%$srch_key%')";
 }
 	// Ordering
 	if($request['order'][0]['column'] != 0){
@@ -53,6 +53,7 @@ if ($res = $connection->query($sql)) {
         }
 		$data[] = [
 			$count,
+			$row['barcode'],
 			$row['name'],
 			$row['category'],
 			$row['sub_category'],

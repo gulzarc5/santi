@@ -16,12 +16,13 @@ if ($_POST['submit']) {
 			header("location:../../deduct_wallet_form.php?msg=3&u_id=$u_id");
 			die();
 		}
-		$new_amount = floatval($row['amount']) - $amount ;
+		$new_amount = floatval($row['amount']) - $amount ;		
+		$total_amount = floatval($row['total_amount']) - $amount ;
 
-		$sql_update = "UPDATE `wallet` SET `amount`='$new_amount' WHERE `id`='$row[id]'";
+		$sql_update = "UPDATE `wallet` SET `amount`='$new_amount', `total_amount`= '$total_amount' WHERE `id`='$row[id]'";
 		if ($res_update = $connection->query($sql_update)) {
 
-			$sql_wallet_history = "INSERT INTO `wallet_history`(`id`, `user_id`,`wallet_id`, `transaction_type`, `amount`,`total`, `comments`, `date`, `time`) VALUES (null,'$u_id','$row[id]','1','$amount','$new_amount','Balance Deducted By Shantirekha','$date','$time')";
+			$sql_wallet_history = "INSERT INTO `wallet_history`(`id`, `user_id`,`wallet_id`, `transaction_type`, `amount`,`total`, `comments`, `date`, `time`) VALUES (null,'$u_id','$row[id]','1','$amount','$total_amount','Balance Deducted By Shantirekha','$date','$time')";
 	 		if ($res_wallet_history = $connection->query($sql_wallet_history)) {}
 
 			header("location:../../deduct_wallet_form.php?msg=1&u_id=$u_id");

@@ -5,6 +5,8 @@ include "../database/connection.php";
 
 
 if(isset($_POST['update_product']) && !empty($_POST['p_id'])){
+    $bar_code = $connection->real_escape_string(mysql_entities_fix_string($_POST['bar_code']));
+
     $p_id = $connection->real_escape_string(mysql_entities_fix_string($_POST['p_id']));
     $name = $connection->real_escape_string(mysql_entities_fix_string($_POST['name']));
     $category = $connection->real_escape_string(mysql_entities_fix_string($_POST['category']));
@@ -37,6 +39,16 @@ if(isset($_POST['update_product']) && !empty($_POST['p_id'])){
             
        }
    }
+
+   if (!empty($bar_code)) {
+    $sql_p_check_bar_code = "SELECT * FROM `product` WHERE `barcode`='$bar_code' AND `id` != '$p_id'";
+    if ($res_p_check_bar_code = $connection->query($sql_p_check_bar_code)) {
+        if ($res_p_check_bar_code->num_rows > 0) {
+                header("location:../../product_edit.php?p_id=".$p_id."&msg=7");
+                die();
+        }
+    }
+    }
     $image = $_FILES['image'];
     $image_name = null;
         if (!empty($image['name'])) {

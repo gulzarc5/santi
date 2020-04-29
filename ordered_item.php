@@ -1,5 +1,6 @@
 <?php
   include "include/header.php";
+  date_default_timezone_set('Asia/Kolkata');
   function showMessage($msg){
     if ($msg == 1) {
       print "<p class='alert alert-success'>Order Status Updated Successfully</p>";
@@ -68,7 +69,8 @@
                     </div>          
                   </div>
 
-                  <center><a class="btn btn-success" name="search" id="serach_id">Search</a></center>
+                  <center><a class="btn btn-success" name="search" id="serach_id">Search</a>
+                  <a class="btn btn-info"  id="export_excel">Export Excel</a></center>
                 </form>
               </div>
             
@@ -82,26 +84,34 @@
                 <tr>
                   <th>Sl</th>
                   <th>Product Id</th>
+                  <th>Product Category</th>
                   <th>Product Name</th>
-                  <th>Quantity</th>
+                  <th>HSN/SAC</th>
+                  <th>Purchase Cost</th>
+                  <th>CGST</th>
+                  <th>SGST</th>
+                  <th>Cashback</th>
+                  <th>Sale Quantity</th>
+                  <th>Total Amount</th>
                 </tr>
               </thead>
                       
               <tbody id="mainTable">
                 <?php
+               
                   $s_time_24  = "00:00:00";
                   $e_time_24  = "23:59:59";
                   $s_date = date('Y-m-d');
                   $e_date = date('Y-m-d');
-                  $sql_user_order = "SELECT `product`.`name` AS p_name, `category`.`name` AS c_name, `order_details`.`p_id` as `p_id`,SUM(`order_details`.`quantity`) as quantity FROM `order_details` INNER JOIN `product` ON `product`.`id`=`order_details`.`p_id` INNER JOIN `category` ON `category`.`id`=`product`.`category_id` WHERE `order_details`.`date` BETWEEN '$s_date' AND '$e_date' AND `order_details`.`time` BETWEEN '$s_time_24' AND '$e_time_24' GROUP BY `order_details`.`p_id` ORDER BY quantity DESC";
+                  $sql_user_order = "SELECT `product`.`cash_back` AS p_cash_back,`product`.`sgst` AS p_sgst,`product`.`cgst` AS p_cgst,`product`.`cost` AS p_cost,`product`.`hsn_code` AS hsn_code,`product`.`name` AS p_name, `category`.`name` AS c_name, `order_details`.`p_id` as `p_id`,SUM(`order_details`.`quantity`) as quantity,SUM(`order_details`.`total_amount`) as total_amount FROM `order_details` INNER JOIN `product` ON `product`.`id`=`order_details`.`p_id` INNER JOIN `category` ON `category`.`id`=`product`.`category_id` WHERE `order_details`.`date` BETWEEN '$s_date' AND '$e_date' AND `order_details`.`time` BETWEEN '$s_time_24' AND '$e_time_24' GROUP BY `order_details`.`p_id` ORDER BY quantity DESC";
 
-                  if (isset($_GET['s_date']) && isset($_GET['e_date']) && empty($_GET['s_time'])) {
-                    # code...
-                  }elseif (isset($_GET['s_time']) && isset($_GET['e_time']) && empty($_GET['s_date'])) {
-                    # code...
-                  }elseif (isset($_GET['s_time']) && isset($_GET['e_time']) && !empty($_GET['s_date']) && !empty($_GET['e_date'])) {
-                    # code...
-                  }
+                  // if (isset($_GET['s_date']) && isset($_GET['e_date']) && empty($_GET['s_time'])) {
+                  //   # code...
+                  // }elseif (isset($_GET['s_time']) && isset($_GET['e_time']) && empty($_GET['s_date'])) {
+                  //   # code...
+                  // }elseif (isset($_GET['s_time']) && isset($_GET['e_time']) && !empty($_GET['s_date']) && !empty($_GET['e_date'])) {
+                  //   # code...
+                  // }
                   if ($res_user_order = $connection->query($sql_user_order)) {
 
                     if ($res_user_order->num_rows > 0) {
@@ -111,19 +121,26 @@
                         print "<tr>
                         <td>$count</td>
                         <td>$user_order_row[p_id]</td>
+                        <td>$user_order_row[c_name]</td>
                         <td>$user_order_row[p_name]</td>
-                        <td>$user_order_row[quantity]</td>
+                        <td>$user_order_row[hsn_code]</td>
+                        <td>".$user_order_row['quantity']*$user_order_row['p_cost']."</td>
+                        <td>".$user_order_row['quantity']*$user_order_row['p_cgst']."</td>
+                        <td>".$user_order_row['quantity']*$user_order_row['p_sgst']."</td>
+                        <td>".$user_order_row['quantity']*$user_order_row['p_cash_back']."</td>
+                        <td>$user_order_row[quantity]</td>                        
+                        <td>".$user_order_row['total_amount']."</td>
                         </tr>";
                         $count++;
                       }
                       print '<tr>
-                              <td align="center" colspan="4">
+                              <td align="center" colspan="11">
                                 <button class="btn btn-info" onclick="printDiv()">Print</button>
                               </td>
                             </tr>';
                     }else{
                       print '<tr>
-                              <td align="center" colspan="4">
+                              <td align="center" colspan="11">
                                 No Orders Found
                               </td>
                             </tr>';
@@ -194,6 +211,20 @@ include "include/footer.php";
   });
 </script>
 
+
+<!-- for excel export -->
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#export_excel").click(function(){
+      var s_date = $('input[name="s_date"]').val();
+      var e_date = $('input[name="e_date"]').val();
+      var s_time = $('input[name="s_time"]').val();
+      var e_time = $('input[name="e_time"]').val();
+      window.location.href = "php/export/excel_order_item_list.php?s_date="+s_date+"&e_date="+e_date+"&s_time="+s_time+"&e_time="+e_time+"";
+    });
+  });
+</script>
 
 <script type="text/javascript">
  function printDiv() {

@@ -198,19 +198,12 @@
                         $count++;
                       }
 
-                      $gross_amount = floatval($row_order['amount']) - floatval($row_order['discount']);
+              
                       print "<tr>
                               <td colspan='4' align='right'>Total : </td>
                               <td>".number_format($row_order['amount'],2)."</td>
                             </tr>
-                            <tr>
-                              <td colspan='4' align='right' >Discount : </td>
-                              <td>".number_format($row_order['discount'],2)."</td>
-                            </tr>
-                            <tr>
-                              <td colspan='4' align='right' >Gross Amount : </td>
-                              <td>".number_format($gross_amount,2)."</td>
-                            </tr>
+                            
                             <tr>
                               <td colspan='4' align='right' >Wallet Pay : </td>
                               <td>".number_format($row_order['wallet_pay'],2)."</td>
@@ -219,24 +212,15 @@
                             <tr>
                               <td colspan='4' align='right' >Net Payable Amount : </td>
                               <td>".number_format($row_order['total'],2)."</td>
+                            </tr>
+                            
+                            <tr>
+                              <td colspan='4' align='right' >Cashback : </td>
+                              <td>".number_format($row_order['cashback'],2)."</td>
                             </tr>";
                     }
                   ?>   
-                  <tr>
-                    <td align="center" colspan="5">
-                      <button class="btn btn-info" onclick="printDiv()">Print</button>
-                      <?php
-                      if (isset($_GET['s_date']) && isset($_GET['e_date'])) {
-                        $s_date = $connection->real_escape_string(mysql_entities_fix_string($_GET['s_date']));          
-                        $e_date = $connection->real_escape_string(mysql_entities_fix_string($_GET['e_date'])); 
-                        print '<a class="btn btn-warning" href="order_list.php?s_date='.$s_date.'&e_date='.$e_date.'" id="backprint">Back</a>';
-                      }else{
-                        print '<a class="btn btn-warning" href="order_list.php" id="backprint">Back</a>';
-                      }
-                      ?>
-                      
-                    </td>
-                  </tr>                     
+                                    
                 </tbody>
               </table>
               <div id="thanks_msg"></div>
@@ -285,7 +269,6 @@ include "include/footer.php";
 </script>
 
 <script type="text/javascript">
-  function printDiv() {
      var printContents = document.getElementById("printable").innerHTML;
      var originalContents = document.body.innerHTML;
 
@@ -293,13 +276,10 @@ include "include/footer.php";
      document.getElementById("thanks_msg").innerHTML = "Thanks For Shopping With Us";
 
      //document.getElementById("backprint").hide();
-     element = document.getElementById('backprint');
-     element.style.display = "none";
 
-     window.print();
+    window.print();
+    window.onafterprint = function(event) {
+        window.location.href="make_invoice_form.php?msg=7";
+    };
 
-     element.style.display = "";
-     document.getElementById("thanks_msg").innerHTML ="";
-     document.body.innerHTML = originalContents;
-  }
 </script>

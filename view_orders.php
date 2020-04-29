@@ -204,10 +204,6 @@
                               <td>".number_format($row_order['amount'],2)."</td>
                             </tr>
                             <tr>
-                              <td colspan='4' align='right' >Discount : </td>
-                              <td>".number_format($row_order['discount'],2)."</td>
-                            </tr>
-                            <tr>
                               <td colspan='4' align='right' >Gross Amount : </td>
                               <td>".number_format($gross_amount,2)."</td>
                             </tr>

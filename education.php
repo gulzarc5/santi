@@ -41,6 +41,7 @@ function showMessage($msg){
                       <thead>
                         <tr>
                           <th>Sl</th>
+                          <th>Bar Code</th>
                           <th>Product Name</th>
                           <th>Category</th>
                           <th>Sub Category</th>
@@ -76,13 +77,14 @@ require_once "include/footer.php";
       "processing" : true,
       "serverSide" : true,
        "columns": [
-          { "orderable": false },
-         { "orderable": false },
-         { "orderable": false },
-          { "orderable": false },
-          null,
-          null,
-          { "orderable": false },
+         null,
+        { "orderable": false },
+        { "orderable": false },
+        { "orderable": false },
+        { "orderable": false },
+        null,
+        null,
+        { "orderable": false },
         ],
         "pageLength": 50,
       "ajax" :{

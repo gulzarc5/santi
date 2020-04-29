@@ -66,6 +66,12 @@ include "../database/connection.php";
                $action = $action."<!--<a class='btn btn-success' href='order_status_update.php?id=$row[id]'>Pending</a>--!>";
             }
 
+            if ($row['order_from'] == 2) {
+              $orderFrom = '<p">Offline</p">';
+            }else{
+              $orderFrom = '<p">App</p">';
+            }
+
               $html = $html."<tr>
                         <td>$count</td>
                         <td>$row[id]</td>
@@ -76,8 +82,10 @@ include "../database/connection.php";
                         <td>$row[date]</td>
                         <td>$time_format</td>
                         <td>$status</td>
+                        <td>$orderFrom</td>
                         <td>$action</td></tr>";
-              }
+              $count++;
+            }
           }else{
               $html = $html."<tr><td>No Orders Found</td></tr>";
           }

@@ -20,6 +20,9 @@
     if ($msg == 6) {
       print "<p class='alert alert-danger'>Image Size is Larger Then The Upload Size</p>";
     }
+    if ($msg == 7) {
+      print "<p class='alert alert-danger'>Bar Code Already Exist Please Try With Another Bar Code</p>";
+    }
   }
 ?>      
 
@@ -51,6 +54,16 @@
 
             <form action="php/product/update_product.php" method="post" class="form-horizontal form-label-left" enctype="multipart/form-data">
               <input type="hidden" name="p_id" value="<?php echo $p_id ?>">
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="product_name">Enter Bar Code Number / Scan Barcode if Available
+                </label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                  <input type="text" placeholder="Enter Bar Code" class="form-control col-md-7 col-xs-12" name="bar_code" value="<?php echo  $product_row['barcode']; ?>">
+                  <span id="bar_code_msg"></span>
+                </div>
+              </div>
+
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="product_name">Product Name <span class="required">*</span>
                 </label>

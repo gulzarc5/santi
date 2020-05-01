@@ -15,54 +15,49 @@
 	 			$data = [
 	 				'id' => $row['id'],
 	 				'user_id' => $row['user_id'],
-	 				'amount' => number_format($row['amount'],2,'.', ''),
+	 				'inactive_amount' => $row['current_cashback_amount'],
+	 				'active_amount' => $row['amount'],
+	 				'total_amount' => $row['total_amount'],
 	 				'status' => $row['status'],
 	 			];
 	 			$response =[
 					"status" => true,
 					'message' => 'Wallet Balance',
-					'code' => 200,
 					'data' => $data,
 					];
 					http_response_code(200);
 					echo json_encode($response);
 					die();
  			}else{
- 				$data = [];
  				$response =[
-					"status" => true,
-					'message' => 'Customer Wallet Is Not Created',
-					'code' => 200,
-					'data' => $data,
-					];
-					http_response_code(200);
-					echo json_encode($response);
-					die();
+					"status" => false,
+					'message' => 'No Wallet Found',
+					'data' => null,
+				];
+				http_response_code(200);
+				echo json_encode($response);
+				die();
  			}
  			
  		}else{
- 			$data = [];
  			$response =[
 				"status" => false,
 				'message' => 'Something Went Wrong',
-				'code' => 400,
-				'data' => $data,
-				];
-				http_response_code(400);
-				echo json_encode($response);
-				die();
+				'data' => null,
+			];
+			http_response_code(200);
+			echo json_encode($response);
+			die();
  		}
  	}else{
- 		$data = [];
  		$response =[
-				"status" => false,
-				'message' => 'Please Check Required Fields',
-				'code' => 400,
-				'data' => $data,
-				];
-				http_response_code(400);
-				echo json_encode($response);
-				die();
+			"status" => false,
+			'message' => 'Please Check Required Fields',
+			'data' => null,
+		];
+		http_response_code(200);
+		echo json_encode($response);
+		die();
  	}
 
 ?>

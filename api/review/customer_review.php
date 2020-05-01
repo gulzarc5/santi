@@ -14,7 +14,6 @@
  			$response =[
 				"status" => true,
 				'message' => 'Thank You For Your Valuable feedback',
-				'code' => 200,
 				];
 				http_response_code(200);
 				echo json_encode($response);
@@ -23,9 +22,8 @@
  			$response =[
 				"status" => false,
 				'message' => 'Sorry Something Went Wrong',
-				'code' => 400,
 				];
-				http_response_code(400);
+				http_response_code(200);
 				echo json_encode($response);
 				die();
  		}
@@ -33,9 +31,8 @@
  		$response =[
 				"status" => false,
 				'message' => 'Please Fill the Form Properly',
-				'code' => 400,
 				];
-				http_response_code(400);
+				http_response_code(200);
 				echo json_encode($response);
 				die();
  	}

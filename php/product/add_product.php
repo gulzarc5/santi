@@ -1,6 +1,7 @@
 <?php
 include "../admin_login_system/php_user_session_check.php";
 include "../database/connection.php";
+date_default_timezone_set('Asia/Kolkata');
 
 if(isset($_POST['add_product']) && !empty($_POST['add_product'])){
     $bar_code = $connection->real_escape_string(mysql_entities_fix_string($_POST['bar_code']));
@@ -59,7 +60,7 @@ if(isset($_POST['add_product']) && !empty($_POST['add_product'])){
         $ext_explode = explode(".",$product_image_name);
         $ext = strtolower(end($ext_explode));
         if( $ext=='jpg' || $ext=='jpeg' || $ext=='png' || $ext=='bmp' || $ext=='gif' ){
-            $image_name = md5(uniqid()).date('now').".".$ext;
+            $image_name = md5(uniqid()).date('Y-m-d').".".$ext;
             $path = "../../uploads/product_image/".$image_name ;
             $image_api_image_url ="uploads/product_image/".$image_name ;
             move_uploaded_file($product_image_tmp_name,$path);
@@ -76,10 +77,11 @@ if(isset($_POST['add_product']) && !empty($_POST['add_product'])){
         }
     }
     $date = date('Y-m-d');
+    $created_at = date("Y-m-d H:i:s");
     if (!empty($sub_category)) {
-        $sql ="INSERT INTO `product`(`id`, `barcode`,`name`, `category_id`, `sub_cat_id`, `description`,`hsn_code`,`cost`,`cash_back`,`promotional_bonus`,`cgst`,`cgst_percent`,`sgst`,`sgst_percent`,`mrp`, `price`, `image`,`stock`, `is_delete`, `is_star_product`, `expiry_date`, `star_added_date`, `created_at`) VALUES (null,'$bar_code','$name','$category','$sub_category','$description','$hsn_code','$cost','$cash_back','$promotional_bonus','$cgst','$cgst_percent','$sgst','$sgst_percent','$mrp','$price','$image_name','$stock','1','$is_star','$expiry_date','$date',date('now'))";
+        $sql ="INSERT INTO `product`(`id`, `barcode`,`name`, `category_id`, `sub_cat_id`, `description`,`hsn_code`,`cost`,`cash_back`,`promotional_bonus`,`cgst`,`cgst_percent`,`sgst`,`sgst_percent`,`mrp`, `price`, `image`,`stock`, `is_delete`, `is_star_product`, `expiry_date`, `star_added_date`, `created_at`) VALUES (null,'$bar_code','$name','$category','$sub_category','$description','$hsn_code','$cost','$cash_back','$promotional_bonus','$cgst','$cgst_percent','$sgst','$sgst_percent','$mrp','$price','$image_name','$stock','1','$is_star','$expiry_date','$date','$created_at')";
     }else{
-         $sql ="INSERT INTO `product`(`id`,`barcode`, `name`, `category_id`, `sub_cat_id`, `description`,`hsn_code`,`cost`,`cash_back`,`promotional_bonus`,`cgst`,`cgst_percent`,`sgst`,`sgst_percent`,`mrp`, `price`, `image`,`stock`, `is_delete`,  `is_star_product`, `expiry_date`,  `star_added_date`, `created_at`) VALUES (null,'$bar_code','$name','$category',null,'$description','$hsn_code','$cost','$cash_back','$promotional_bonus','$cgst','$cgst_percent','$sgst','$sgst_percent','$mrp','$price','$image_name','$stock','1','$is_star','$expiry_date','$date',date('now'))";
+         $sql ="INSERT INTO `product`(`id`,`barcode`, `name`, `category_id`, `sub_cat_id`, `description`,`hsn_code`,`cost`,`cash_back`,`promotional_bonus`,`cgst`,`cgst_percent`,`sgst`,`sgst_percent`,`mrp`, `price`, `image`,`stock`, `is_delete`,  `is_star_product`, `expiry_date`,  `star_added_date`, `created_at`) VALUES (null,'$bar_code','$name','$category',null,'$description','$hsn_code','$cost','$cash_back','$promotional_bonus','$cgst','$cgst_percent','$sgst','$sgst_percent','$mrp','$price','$image_name','$stock','1','$is_star','$expiry_date','$date','$created_at')";
     }
    
     if ($result=$connection->query($sql)){

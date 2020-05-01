@@ -1,6 +1,8 @@
 <?php
 include "../admin_login_system/php_user_session_check.php";
 include "../database/connection.php";
+
+date_default_timezone_set('Asia/Kolkata');
 include '../../vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\IOFactory;

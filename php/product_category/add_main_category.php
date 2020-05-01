@@ -19,7 +19,7 @@ if(isset($_POST['category']) ){
         $ext_explode = explode(".",$category_image_name);
         $ext = strtolower(end($ext_explode));
         if( $ext=='jpg' || $ext=='jpeg' || $ext=='png' || $ext=='bmp' || $ext=='gif' ){
-            $image_name = md5(uniqid()).date('now').".".$ext;
+            $image_name = md5(uniqid()).date('y-m-d').".".$ext;
             $path = "../../uploads/main_category/".$image_name ;
             move_uploaded_file($category_image_tmp_name,$path);
 

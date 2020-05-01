@@ -1,6 +1,8 @@
 <?php
 include "../admin_login_system/php_user_session_check.php";
 include "../database/connection.php";
+date_default_timezone_set('Asia/Kolkata');
+
 if (isset($_POST['bar_code']) && !empty($_POST['bar_code'])) {
 
 	if (!isset($_SESSION['invoice_user'])) {
@@ -43,7 +45,7 @@ if (isset($_POST['bar_code']) && !empty($_POST['bar_code'])) {
 	}
 
 
-	date_default_timezone_set('Asia/Kolkata');
+	
 	$bar_code = $connection->real_escape_string(mysql_entities_fix_string($_POST['bar_code']));
 	$quantity = $connection->real_escape_string(mysql_entities_fix_string($_POST['quantity']));
 	$date = date('Y-m-d');

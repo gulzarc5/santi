@@ -20,7 +20,7 @@ if(isset($_POST['submit'])){
         $ext_explode = explode(".",$product_image_name);
         $ext = strtolower(end($ext_explode));
         if( $ext=='jpg' || $ext=='jpeg' || $ext=='png' || $ext=='bmp' || $ext=='gif' ){
-            $image_name = md5(uniqid()).date('now').".".$ext;
+            $image_name = md5(uniqid()).date('y-m-d').".".$ext;
             $path = "../../uploads/slider_image/".$image_name ;
             $image_api_image_url ="uploads/slider_image/".$image_name ;
             move_uploaded_file($product_image_tmp_name,$path);

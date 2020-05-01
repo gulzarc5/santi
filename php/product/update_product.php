@@ -1,7 +1,7 @@
 <?php
 include "../admin_login_system/php_user_session_check.php";
 include "../database/connection.php";
-
+date_default_timezone_set('Asia/Kolkata');
 
 
 if(isset($_POST['update_product']) && !empty($_POST['p_id'])){
@@ -65,7 +65,7 @@ if(isset($_POST['update_product']) && !empty($_POST['p_id'])){
             $ext_explode = explode(".",$product_image_name);
             $ext = strtolower(end($ext_explode));
             if( $ext=='jpg' || $ext=='jpeg' || $ext=='png' || $ext=='bmp' || $ext=='gif' ){
-                $image_name = md5(uniqid()).date('now').".".$ext;
+                $image_name = md5(uniqid()).date('Y-m-d').".".$ext;
                 $path = "../../uploads/product_image/".$image_name ;
                 $image_api_image_url ="uploads/product_image/".$image_name ;
                 move_uploaded_file($product_image_tmp_name,$path);

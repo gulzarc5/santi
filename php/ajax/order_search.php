@@ -1,6 +1,7 @@
 <?php
 // include "../admin_login_system/php_user_session_check.php";
 include "../database/connection.php";
+date_default_timezone_set('Asia/Kolkata');
 
 	if (isset($_POST['search'])) {
         $s_date = $connection->real_escape_string(mysql_entities_fix_string($_POST['s_date']));

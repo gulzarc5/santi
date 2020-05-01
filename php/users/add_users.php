@@ -1,6 +1,7 @@
 <?php
 include "../admin_login_system/php_user_session_check.php";
 include "../database/connection.php";
+date_default_timezone_set('Asia/Kolkata');
 
 if ($_POST['submit']) {
 	$name = $connection->real_escape_string(mysql_entities_fix_string($_POST['name']));
@@ -30,8 +31,8 @@ if ($_POST['submit']) {
     		die();
  		} 			
 	}
-
-	$sql = "INSERT INTO `users`(`id`, `parent_id`, `refferel`, `name`, `email`, `mobile`, `state`, `city`, `address`, `password`, `user_type`,`is_star`, `date`) VALUES (null,null,null,'$name','$email','$mobile','$state','$city','$address','$password','2','1',date('now'))";
+	$created_at = date('Y-m-d H:i:s');
+	$sql = "INSERT INTO `users`(`id`, `parent_id`, `refferel`, `name`, `email`, `mobile`, `state`, `city`, `address`, `password`, `user_type`,`is_star`, `date`) VALUES (null,null,null,'$name','$email','$mobile','$state','$city','$address','$password','2','1','$created_at')";
 
 	if ($res = $connection->query($sql)) {
 
@@ -45,7 +46,7 @@ if ($_POST['submit']) {
  		if ($res_parmanent = $connection->query($sql_parmanent)) {}
 
  		$key = uniqid('api');
- 	    $api_key_sql = "INSERT INTO `api_key`(`id`, `user_id`, `api_key`, `date`) VALUES (null,'$user_id','$key',date('now'))";
+ 	    $api_key_sql = "INSERT INTO `api_key`(`id`, `user_id`, `api_key`, `date`) VALUES (null,'$user_id','$key','$created_at')";
 		if ($connection->query($api_key_sql)) {
 			$data_user = [
 				'user_id' => $user_id,

@@ -2,6 +2,7 @@
 
 include "../admin_login_system/php_user_session_check.php";
 include "../database/connection.php";
+date_default_timezone_set('Asia/Kolkata');
 
 if (isset($_POST['package_add'])) {
 	$name = $connection->real_escape_string(mysql_entities_fix_string($_POST['name']));
@@ -27,7 +28,7 @@ if (isset($_POST['package_add'])) {
         $ext_explode = explode(".",$product_image_name);
         $ext = strtolower(end($ext_explode));
         if( $ext=='jpg' || $ext=='jpeg' || $ext=='png' || $ext=='bmp' || $ext=='gif' ){
-            $image_name = md5(uniqid()).date('now').".".$ext;
+            $image_name = md5(uniqid()).date('Y-m-d').".".$ext;
             $path = "../../uploads/package_image/".$image_name ;
             move_uploaded_file($product_image_tmp_name,$path);
 
@@ -44,8 +45,8 @@ if (isset($_POST['package_add'])) {
     }
 
 
-
-	$sql = "INSERT INTO `offer`(`id`, `name`, `description`, `image`, `offer_type`, `offer_start`, `offer_end`, `percentage`, `status`, `date`) VALUES (null,'$name','$description','$image_name','1','$start_offer','$end_offer',null,'1',date('now'))";
+    $date = date('Y-m-d H:i:s');
+	$sql = "INSERT INTO `offer`(`id`, `name`, `description`, `image`, `offer_type`, `offer_start`, `offer_end`, `percentage`, `status`, `date`) VALUES (null,'$name','$description','$image_name','1','$start_offer','$end_offer',null,'1','$date')";
 	if ($res = $connection->query($sql)) {
 		header("location:../../offer_form.php?msg=1");
          die();

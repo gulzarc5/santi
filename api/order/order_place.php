@@ -1,7 +1,8 @@
 <?php
 	include_once '../../php/database/connection.php';
 	include_once '../security/api_key_check.php';
- 	header("content-type: application/json");
+	 header("content-type: application/json");
+	 date_default_timezone_set('Asia/Kolkata');
 
  	if (!empty($_POST['user_id']) && !empty($_POST['shipping_address_id'])) {
 
@@ -12,7 +13,7 @@
  		// If wallet status 2 then pay from wallet else dont use wallet
  		$wallet_status = $connection->real_escape_string(mysql_entities_fix_string($_POST['wallet_status']));
  		//Store Date And Time In A Variable with specified time zone
- 		date_default_timezone_set('Asia/Kolkata');
+ 		
  		$date = date('Y-m-d');
 	 	$time = date('H:i:s');
 

@@ -1,7 +1,8 @@
 <?php
 	include_once '../../php/database/connection.php';
 	include_once '../security/api_key_check.php';
- 	header("content-type: application/json");
+	 header("content-type: application/json");
+	 date_default_timezone_set('Asia/Kolkata');
 
  	if (!empty($_POST['user_id']) && !empty($_POST['star'])) {
  		

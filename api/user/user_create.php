@@ -1,7 +1,8 @@
 <?php
 	include_once '../../php/database/connection.php';
 	// include_once '../security/device_id_check';
- 	header("content-type: application/json");
+	 header("content-type: application/json");
+	 date_default_timezone_set('Asia/Kolkata');
 
  	if (!empty($_POST['name']) && !empty($_POST['mobile']) && !empty($_POST['email']) && !empty($_POST['password'])) {
  		$name = $connection->real_escape_string(mysql_entities_fix_string($_POST['name']));

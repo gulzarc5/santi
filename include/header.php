@@ -73,7 +73,7 @@ function mysql_fix_string($string){
                       <li><a href="add_user_form.php">Add User</a></li>
                       <li><a href="user_list.php">Activated User List</a></li>
                       <li><a href="deactivated_user_list.php">DeActivated User List</a></li>
-                      
+                      <li><a href="user_wallet_list.php">User Wallet List</a></li>                      
                     </ul>
                   </li>
                   <li><a><i class="fa fa-edit"></i> Products <span class="fa fa-chevron-down"></span></a>

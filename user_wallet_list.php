@@ -72,7 +72,7 @@ function showMessage($msg){
            <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>User List<small></small></h2>
+                    <h2>User Wallet<small></small></h2>
                     <div class="clearfix"></div>
                       <?php 
                         if (isset($_GET['msg'])) {
@@ -88,11 +88,12 @@ function showMessage($msg){
                           <th>Sl</th>
                           <th>id</th>
                           <th>Name</th>
-                          <th>Email</th>
-                          <th>Mobile</th>
-                          <th>Wallet</th>
+                          <th>Mobile</th>                          
+                          <th>Current Month Balance</th>
+                          <th>Previous Balance</th>                          
+                          <th>Total Balance</th>
                           <th>Wallet Status</th>
-                          <th>actions</th>
+                          <!-- <th>actions</th> -->
                         </tr>
                       </thead>
                       <tbody>
@@ -141,7 +142,7 @@ require_once "include/footer.php";
           null,
         ],
       "ajax" :{
-        url : "php/ajax/user_fetch.php",
+        url : "php/ajax/user_wallet_fetch.php",
         type : "post"
       }
     });

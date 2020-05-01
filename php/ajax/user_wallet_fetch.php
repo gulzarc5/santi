@@ -61,7 +61,9 @@ if (!empty($request['search']['value'])) {
              		}else{
              			$wallet_status = "<p class='btn btn-warning disabled'>Disabled</p>";
              		}
-             		$wallet = number_format($row_wallet['amount'],2);
+             		$current_wallet = number_format($row_wallet['current_cashback_amount'],2);
+             		$prev_wallet = number_format($row_wallet['amount'],2);
+             		$total_wallet = number_format($row_wallet['total_amount'],2);
              		if ($row_wallet['status'] == 1) {
              			$action = $action .'<a href="php/wallet/wallet_status_update.php?u_id='.$row_user['id'].'&status=2" class="btn btn-danger">Deactivate Wallet</a>';
              		}else{
@@ -83,11 +85,11 @@ if (!empty($request['search']['value'])) {
 				$count,
 				$row_user['id'],
 				$user_name,
-				$row_user['email'],
 				$row_user['mobile'],
-				$wallet,
+				$current_wallet,
+				$prev_wallet,
+				$total_wallet,
 				$wallet_status,
-				$action,
 			];
 			$count++;
 		}

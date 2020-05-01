@@ -41,7 +41,8 @@
 					if Yes then active user wallet Active user star
 				*/
 				$total_star_member = 0;
-				while ($row_user = $res_user->fetch_assoc()) {
+				while ($row_user = $res_user->fetch_assoc()) {					
+					$data = addCurrentWalletBalanceToPrev($row_user['id'],$connection);
 					$star_count = fetchStarProduct($row_user['id'],$year,$month,$connection);
 					if ($star_min_purchase <= $star_count) {
 						// Active User for star member and Active user wallet
@@ -101,6 +102,15 @@
 
 			$user_wallet_active = "UPDATE `wallet` SET `status`='2' WHERE `user_id`='$user_id'";
 			if ($res_user_wallet_active =  $connection->query($user_wallet_active)) {}
+		}
+		return true;
+	}
+
+	// Function to Current wallet balance sent to prev
+	function addCurrentWalletBalanceToPrev($user_id,$connection)
+	{
+		$user_star_active_sql = "UPDATE `wallet` SET `amount`=(`amount`+`current_cashback_amount`),`current_cashback_amount`='0' WHERE `user_id`='$user_id'";
+		if ($res_user_star_active = $connection->query($user_star_active_sql)) {
 		}
 		return true;
 	}

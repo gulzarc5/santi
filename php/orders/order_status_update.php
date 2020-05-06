@@ -3,6 +3,7 @@
 	include "../database/connection.php";
 
     date_default_timezone_set('Asia/Kolkata');
+    
 	if (isset($_GET['id'])) {
     	$order_id = $connection->real_escape_string(mysql_entities_fix_string($_GET['id']));
         $s_date = $connection->real_escape_string(mysql_entities_fix_string($_GET['s_date']));
@@ -14,56 +15,35 @@
         
         /////////////////////////////////////////////////////////////////////////////
         //Parent Cashback
-        $sql_user = "SELECT * FROM `orders` WHERE `id`='$order_id'";
-        if ($res_user = $connection->query($sql_user)) {
-            $row_user = $res_user->fetch_assoc();
-
-            if ($row_user['discountable_amount'] > 0) {
-               $parent_sql = "SELECT `parent_id` FROM `users` WHERE `parent_id` != 'NULL' AND `id`='$row_user[user_id]'";
-                if ($res_parent = $connection->query($parent_sql)) {
-                    if ($res_parent->num_rows > 0) {
-                        $row_parent = $res_parent->fetch_assoc();
-
-                        $sql_parent_cashback = "SELECT `percentage` FROM `offer` WHERE `offer_type`='2' ORDER BY `id` DESC LIMIT 1";
-                        if ($res_parent_cashback = $connection->query($sql_parent_cashback)) {
-                            $row_parent_cashback = $res_parent_cashback->fetch_assoc();
-                            $cashback = (floatval($row_user['discountable_amount']) * floatval($row_parent_cashback['percentage']) ) / 100;
-
-                            $sql_parent_wallet = "SELECT * FROM `wallet` WHERE `user_id`='$row_parent[parent_id]' LIMIT 1";
-                            if ($res_parent_wallet = $connection->query($sql_parent_wallet)) {
-                                $row_parent_wallet = $res_parent_wallet->fetch_assoc();
-
-                                $parent_wallet = floatval($row_parent_wallet['amount']) + $cashback;
-
-                                $update_parent_wallet = "UPDATE `wallet` SET `amount`='$parent_wallet' WHERE `user_id`='$row_parent[parent_id]'";
-
-                                if ($connection->query($update_parent_wallet)) {
-                                    $sql_wallet_history = "INSERT INTO `wallet_history`(`id`, `user_id`,`wallet_id`, `transaction_type`, `amount`,`total`, `comments`, `date`, `time`) VALUES (null,'$row_parent[parent_id]','$row_parent_wallet[id]','2','$cashback','$parent_wallet','Cashback Credited Against Your Downline Purchase','$date','$time')";
-                                    if ($res_wallet_history = $connection->query($sql_wallet_history)) {}
-                                }
-
-                            }
-                        }
-                    }
-                }
-            }           
+        $sql_orders = "SELECT * FROM `orders` WHERE `id`='$order_id'";
+        if ($res_orders = $connection->query($sql_orders)) {
+            $row_orders = $res_orders->fetch_assoc();
+            if (!empty($row_orders['user_id']) && ($row_orders['cashback'] > 0 )) {
+                cashbackCredit($row_orders['user_id'],$row_orders['cashback'],$connection);
+            }
         }
 
 
         /// Product Purchase Cash Back Credit To User Walle
+        $total_promotional_bonus = 0;
 
-        $order_detail_sql = "SELECT `order_details`.`user_id` AS u_id, `order_details`.`id` AS order_detail_id,`order_details`.`p_id` AS p_id,`product`.`cash_back` AS cash_back,`product`.`name` AS p_name,`wallet`.`id` AS wallet_id, `wallet`.`amount` AS wallet_amount FROM `order_details` LEFT JOIN `product` ON `product`.`id` = `order_details`.`p_id` LEFT JOIN `wallet` ON `wallet`.`user_id`=`order_details`.`user_id` WHERE `order_details`.`order_id`='$order_id'";
+        $order_detail_sql = "SELECT 
+        `order_details`.`user_id` AS u_id, 
+        `order_details`.`id` AS order_detail_id,
+        `order_details`.`p_id` AS p_id,
+        `order_details`.`quantity` AS quantity,
+        `product`.`promotional_bonus` AS promotional_bonus,
+        `product`.`name` AS p_name,
+        `wallet`.`id` AS wallet_id,
+         `wallet`.`amount` AS wallet_amount FROM `order_details` 
+         LEFT JOIN `product` ON `product`.`id` = `order_details`.`p_id` 
+         LEFT JOIN `wallet` ON `wallet`.`user_id`=`order_details`.`user_id`
+          WHERE `order_details`.`order_id`='$order_id'";
         if ($res_order_detail = $connection->query($order_detail_sql)) {
             while ($row_order_detail = $res_order_detail->fetch_assoc()) {
 
-                if (isset($row_order_detail['cash_back']) && ($row_order_detail['cash_back'] > 0)) {
-                    $update_wallet = "UPDATE `wallet` SET `amount`=(`amount`+'$row_order_detail[cash_back]') WHERE `id`='$row_order_detail[wallet_id]'";
-                    $amount = $row_order_detail['wallet_amount'] + $row_order_detail['cash_back'];
-
-                    if ($connection->query($update_wallet)) {
-                        $sql_wallet_history = "INSERT INTO `wallet_history`(`id`, `user_id`,`wallet_id`, `transaction_type`, `amount`,`total`, `comments`, `date`, `time`) VALUES (null,'$row_order_detail[u_id]','$row_order_detail[wallet_id]','2','$row_order_detail[cash_back]','$amount','Cashback Credited Against Your Purchase of $row_order_detail[p_name]','$date','$time')";
-                        if ($res_wallet_history = $connection->query($sql_wallet_history)) {}
-                    }
+                if (isset($row_order_detail['promotional_bonus']) && ($row_order_detail['promotional_bonus'] > 0)) {
+                    $total_promotional_bonus+=($row_order_detail['promotional_bonus']*$row_order_detail['quantity']);
                 }
 
                 $check_star_sql = "SELECT * FROM `product` WHERE `id`='$row_order_detail[p_id]' AND `is_star_product` = '2'";
@@ -86,6 +66,18 @@
                 
             }
         } 
+
+        $sql_parent = "SELECT 
+        `users`.`parent_id` AS parent_id FROM `orders`
+         LEFT JOIN `users` ON `users`.`id`=`orders`.`user_id`
+         WHERE `orders`.`id`='$order_id'
+        ";
+        if ($res_parent = $connection->query($sql_parent)) {
+            $row_parent = $res_parent->fetch_assoc();
+            if (!empty($row_parent['parent_id']) && !empty( $total_promotional_bonus > 0)) {
+                promotionalCredit($row_parent['parent_id'],$total_promotional_bonus,$connection);
+            }
+        }
         
 
         //////////////////////// Parent Cashback End //////////////////////////////////
@@ -110,4 +102,48 @@ function mysql_fix_string($string){
         $string = stripslashes($string);
     return $string;
 }
+
+function cashbackCredit($user_id,$amount,$connection){
+	
+    date_default_timezone_set('Asia/Kolkata');
+    $date = date('Y-m-d');
+    $time = date('H:i:s');
+
+    $wallet_amount_sql = "SELECT * FROM `wallet` WHERE `user_id`='$user_id'";
+    if ($res_wallet_amount = $connection->query($wallet_amount_sql)) {
+        if ($res_wallet_amount->num_rows > 0) {
+            $wallet_amount_row = $res_wallet_amount->fetch_assoc();
+            $wallet_amount = $wallet_amount_row['current_cashback_amount']+$amount;
+            $wallet_total_amount = floatval($wallet_amount) + floatval($wallet_amount_row['total_amount']);
+
+            $sql_update_wallet = "UPDATE `wallet` SET `current_cashback_amount`='$wallet_amount',`total_amount`='$wallet_total_amount' WHERE `user_id` = '$user_id'";
+            if ($res_wallet_update = $connection->query($sql_update_wallet)) {
+                $sql_wallet_history = "INSERT INTO `wallet_history`(`id`, `user_id`,`wallet_id`, `transaction_type`, `amount`,`total`, `comments`, `date`, `time`) VALUES (null,'$user_id','$wallet_amount_row[id]','2','$amount','$wallet_total_amount','Product Purchased Cashback Credited','$date','$time')";
+                if ($res_wallet_history = $connection->query($sql_wallet_history)) {}
+            }
+        }
+    }
+    return true;
+}
+
+function promotionalCredit($user_id,$amount,$connection){
+    date_default_timezone_set('Asia/Kolkata');
+    $date = date('Y-m-d');
+    $time = date('H:i:s');
+
+    $wallet_amount_sql = "SELECT * FROM `wallet` WHERE `user_id`='$user_id'";
+    if ($res_wallet_amount = $connection->query($wallet_amount_sql)) {
+        if ($res_wallet_amount->num_rows > 0) {
+            $wallet_amount_row = $res_wallet_amount->fetch_assoc();
+            $wallet_amount = $wallet_amount_row['amount']+$amount;
+            $sql_update_wallet = "UPDATE `wallet` SET `amount`='$wallet_amount' WHERE `user_id` = '$user_id'";
+            if ($res_wallet_update = $connection->query($sql_update_wallet)) {
+                $sql_wallet_history = "INSERT INTO `wallet_history`(`id`, `user_id`,`wallet_id`, `transaction_type`, `amount`,`total`, `comments`, `date`, `time`) VALUES (null,'$user_id','$wallet_amount_row[id]','2','$amount','$wallet_amount','Promotional Bonus Credited Against Your Downline Purchase','$date','$time')";
+                if ($res_wallet_history = $connection->query($sql_wallet_history)) {}
+            }
+        }
+    }
+
+    return true;
+ }
 ?>

@@ -73,7 +73,7 @@
 
 							$total_amount = floatval($total_amount) + ($single_price);
 							 
-							$order_details_sql = "INSERT INTO `order_details`(`id`, `user_id`, `order_id`, `p_id`, `price`, `quantity`,`sgst`,`cgst`,`total_sgst`,`total_cgst`,`total_cashback`,`total_amount`, `date`, `time`,`order_from`) VALUES (null,'$user_id','$order_id','$row_cart[p_id]','$price_product','$row_cart[quantity]','$row_price[cgst]','$row_price[sgst]','$single_sgst','$single_cgst','$single_cashback','$single_price','$date','$time','1')";
+							$order_details_sql = "INSERT INTO `order_details`(`id`, `user_id`, `order_id`, `p_id`, `price`, `quantity`,`cashback`,`sgst`,`cgst`,`total_sgst`,`total_cgst`,`total_cashback`,`total_amount`, `date`, `time`,`order_from`) VALUES (null,'$user_id','$order_id','$row_cart[p_id]','$price_product','$row_cart[quantity]','$row_price[cash_back]','$row_price[cgst]','$row_price[sgst]','$single_sgst','$single_cgst','$single_cashback','$single_price','$date','$time','1')";
 
 							$stock = $row_price['stock'] - $row_cart['quantity'];
 

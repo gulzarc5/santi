@@ -8,7 +8,17 @@
  		$sql = "SELECT * FROM `product` WHERE `id`='$product_id'";
  		if ($res = $connection->query($sql)) {
  			if ($res->num_rows > 0) {
- 				$row = $res->fetch_assoc();
+				$row = $res->fetch_assoc();
+
+				$sql_related = "SELECT * FROM `product` WHERE `category_id`='$row[category_id]' AND `id` != '$product_id' ORDER BY `id` DESC LIMIT 10";
+				if (!empty($row['sub_cat_id'])) {
+					$sql_related = "SELECT * FROM `product` WHERE `sub_cat_id`='$row[sub_cat_id]' AND `id` != '$product_id' ORDER BY `id` DESC LIMIT 10";
+				}
+				$row['related_products'] = [];
+				if ($res_related = $connection->query($sql_related)) {
+					$row['related_products'] = $res_related->fetch_all(MYSQLI_ASSOC);
+				}
+				
 	 			$response =[
 					"status" => true,
 					'message' => 'Product Details',

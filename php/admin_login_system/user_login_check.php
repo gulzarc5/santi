@@ -8,14 +8,15 @@ if(isset($_POST['email']) && !empty($_POST['email']) && !empty($_POST['password'
     // $password = password_hash($password, PASSWORD_BCRYPT);
     // echo $password;
     // die();
-    $sql ="SELECT * FROM `users` WHERE `email` = '$email' AND `user_type` ='1'";
+    $sql ="SELECT * FROM `users` WHERE `email` = '$email' AND (`user_type` ='1' OR `user_type` = 3)";
     if ($result=$connection->query($sql)){
         if($result->num_rows > 0) {
         	$user=$result->fetch_assoc();
             if (password_verify($password,$user['password'])) {
                 $_SESSION['admin_user_id'] = $user['id'];
                 $_SESSION['email'] = $email;
-                $_SESSION['user_type'] = 1;
+                $_SESSION['admin_name'] = $user['name'];
+                $_SESSION['user_type'] = $user['user_type'];
 
                 if (!empty($_POST['page'])) {
                     header("location:../../deshboard.php");

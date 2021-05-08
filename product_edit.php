@@ -137,7 +137,7 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Purchase Cost
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                  <input type="number" cast="any"  name="cost" value="<?=$product_row['cost']?>" class="form-control col-md-7 col-xs-12">
+                  <input type="number" step="any"  name="cost" value="<?=$product_row['cost']?>" class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 
@@ -145,7 +145,7 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="price">M.R.P.<span class="required">*</span>
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                  <input type="number" cast="any"  name="mrp" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $product_row['mrp']; ?>">
+                  <input type="number" step="any"  name="mrp" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $product_row['mrp']; ?>">
                 </div>
               </div>
               
@@ -153,7 +153,7 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="price">Price<span class="required">*</span>
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                  <input type="number" cast="any"  name="price" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $product_row['price']; ?>">
+                  <input type="number" step="any"  name="price" required="required" class="form-control col-md-7 col-xs-12" value="<?php echo $product_row['price']; ?>">
                 </div>
               </div>
 
@@ -161,11 +161,11 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">CGST
                 </label>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                  <input type="number" cast="any"  name="cgst" value="<?=$product_row['cgst']?>"  class="form-control col-md-7 col-xs-12">
+                  <input type="number" step="any"  name="cgst" value="<?=$product_row['cgst']?>"  class="form-control col-md-7 col-xs-12">
                   <span>CGST Amount</span>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                  <input type="number" cast="any"  name="cgst_percent" value="<?=$product_row['cgst_percent']?>"  class="form-control col-md-7 col-xs-12">
+                  <input type="number" step="any"  name="cgst_percent" value="<?=$product_row['cgst_percent']?>"  class="form-control col-md-7 col-xs-12">
                   <span>CGST Percent</span>
                 </div>
               </div>
@@ -174,11 +174,11 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">SGST
                 </label>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                  <input type="number" cast="any"  name="sgst" value="<?=$product_row['sgst']?>"  class="form-control col-md-7 col-xs-12">
+                  <input type="number" step="any"  name="sgst" value="<?=$product_row['sgst']?>"  class="form-control col-md-7 col-xs-12">
                   <span>SGST Amount</span>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                  <input type="number" cast="any"  name="sgst_percent" value="<?=$product_row['sgst_percent']?>"  class="form-control col-md-7 col-xs-12">
+                  <input type="number" step="any"  name="sgst_percent" value="<?=$product_row['sgst_percent']?>"  class="form-control col-md-7 col-xs-12">
                   <span>SGST Percent</span>
                 </div>
               </div>
@@ -187,7 +187,7 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Cashback
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                  <input type="number" cast="any"  name="cash_back" value="<?=$product_row['cash_back']?>"  class="form-control col-md-7 col-xs-12">
+                  <input type="number" step="any"  name="cash_back" value="<?=$product_row['cash_back']?>"  class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 
@@ -195,7 +195,7 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Promotional Bonus
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                  <input type="number" cast="any"  name="promotional_bonus" value="<?=$product_row['promotional_bonus']?>"  class="form-control col-md-7 col-xs-12">
+                  <input type="number" step="any"  name="promotional_bonus" value="<?=$product_row['promotional_bonus']?>"  class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 

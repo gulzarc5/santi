@@ -89,10 +89,16 @@
 	 		$user_id = $connection->insert_id;
 	 		$date = date('Y-m-d');
 	 		$time = date('h:i:s');
-	 		$sql_wallet = "INSERT INTO `wallet`(`id`, `user_id`, `amount`,`status`,`date`, `time`) VALUES (null,'$user_id','0','2','$date','$time')";
-	 		if ($res_wallet = $connection->query($sql_wallet)) {
-	 			# code...
-	 		}
+			 
+			 $sql_wallet = "INSERT INTO `wallet`(`id`, `user_id`, `amount`,`status`,`date`, `time`) VALUES (null,'$user_id','0','1','$date','$time')";
+			if ($res_wallet = $connection->query($sql_wallet)) {
+			
+			}
+			
+			$sql_user_credit = "INSERT INTO `user_credit`(`id`, `user_id`, `amount`,`date`) VALUES (null,'$user_id','0','$date')";
+			if ($res_user_credit = $connection->query($sql_user_credit)){
+				
+			}
 
 	 		if (!empty($pin)) {
 	 			$sql_parmanent = "INSERT INTO `parmanent_address`(`id`, `user_id`, `state`, `city`, `location`, `pin`) VALUES (null,'$user_id','$state','$city','$address','$pin')";

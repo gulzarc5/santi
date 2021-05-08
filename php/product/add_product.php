@@ -35,14 +35,14 @@ if(isset($_POST['add_product']) && !empty($_POST['add_product'])){
    }
 
    if (!empty($bar_code)) {
-    $sql_p_check_bar_code = "SELECT * FROM `product` WHERE `barcode`='$bar_code'";
+    $sql_p_check_bar_code = "SELECT * FROM `product` WHERE LEFT(`barcode`,12)='$bar_code' AND `is_delete`!='2'";
        if ($res_p_check_bar_code = $connection->query($sql_p_check_bar_code)) {
            if ($res_p_check_bar_code->num_rows > 0) {
                 header("location:../../add_product_form.php?msg=7");
                 die();
            }
        }
-   }  
+   }
 
 
     $image = $_FILES['image'];
@@ -88,7 +88,7 @@ if(isset($_POST['add_product']) && !empty($_POST['add_product'])){
         $product_id = $connection->insert_id;
         $numlength = strlen((string)$product_id);
         if (empty($bar_code)) {
-           $digits_needed=(12 - $numlength);
+           $digits_needed=(11 - $numlength);
             $random_number=mt_rand(0, 9); // set up a blank string
             $count=0;
             while ( $count < $digits_needed ) {

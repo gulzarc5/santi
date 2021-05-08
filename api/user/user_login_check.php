@@ -35,6 +35,7 @@
 	    				'name' => $user['name'],
 	    				'email' => $user['email'],
 	    				'mobile' => $user['mobile'],
+	    				'is_star' => $user['is_star'],
 	    			];
 	    			}
 	    			

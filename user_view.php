@@ -7,11 +7,19 @@ require_once "include/header.php";
 
 	<?php
 	 if (isset($_GET['u_id'])) {
+        date_default_timezone_set('Asia/Kolkata');
 	 	$u_id = $connection->real_escape_string(mysql_entities_fix_string($_GET['u_id']));
 	 	$sql_u_fetch = "SELECT * FROM `users` WHERE `id`='$u_id'";
 	 	if ($res_u = $connection->query($sql_u_fetch)) {
 	 		$user_row = $res_u->fetch_assoc();
-	 	
+	 	    $star_product_number = 0;
+	 	    $month = date('m');
+            $year = date('Y');
+	 	    $check_current_month_star_sql = "SELECT * FROM `orders_star` WHERE MONTH(created_at) = '$month' AND YEAR(created_at) = '$year' AND `user_id`='$user_row[id]'";
+            if ($res_check_current_month_star = $connection->query($check_current_month_star_sql)) {
+                $star_product_number = $res_check_current_month_star->num_rows;
+                }
+	 	    
 	?>
 
 	<div class="row">
@@ -35,12 +43,15 @@ require_once "include/header.php";
 	                      		<address>
 	                      			
 	                      			<b>Id :</b><?php echo $user_row['id'];?>
-		                            <br><strong>Name : <?php echo $user_row['name'];?></strong>
+		                            <br><strong>Name : <?php 
+		                            if($user_row['is_star'] == 2){
+		                                echo '<i class="fa fa-star" aria-hidden="true" style="color: red;font-size: 22px;"></i>';
+		                            }
+		                            echo $user_row['name'];
+		                            ?></strong>
 		                            <br><b>Mobile :</b><?php echo $user_row['mobile'];?>
 		                            <br><b>Email :</b><?php echo $user_row['email'];?>
-		                            <br><b>Parmanent Address :</b>
-		                            
-		                            <br><b>Shipping Address :</b><br>
+		                            <br><b>Total Star Product purchased In Current Month : <?=$star_product_number?></b>
 		                           
 		                            
 	                        	</address>

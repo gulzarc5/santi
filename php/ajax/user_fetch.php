@@ -5,7 +5,7 @@ header("content-type: application/json");
 $request = $_REQUEST;
 
 
-$sql_count = "SELECT * FROM `users` WHERE `status` = '1' AND `user_type` != '1'";
+$sql_count = "SELECT * FROM `users` WHERE `status` = '1' AND `user_type` = '2'";
 
 //Searching 
 if (!empty($request['search']['value'])) {
@@ -21,7 +21,7 @@ if ($res_count = $connection->query($sql_count)) {
 }
 
 
-$sql = "SELECT * FROM `users` WHERE `status` = '1' AND `user_type` != '1'";
+$sql = "SELECT * FROM `users` WHERE `status` = '1' AND `user_type` = '2'";
 
 if (!empty($request['search']['value'])) {
 	$sql = $sql."  AND (`name` LIKE '%$srch_key%' OR `email`  LIKE '%$srch_key%' OR `mobile` LIKE '%$srch_key%')";
@@ -41,17 +41,28 @@ if (!empty($request['search']['value'])) {
 		$data = [];
 		$count = 1;
 		while ($row_user = $res->fetch_assoc()) {
-			$action = '<a href="user_view.php?u_id='.$row_user['id'].'" class="btn btn-success">View</a>
-                 <a href="edit_user.php?u_id='.$row_user['id'].'" class="btn btn-success">Edit</a>
-                 <a href="show_downline.php?u_id='.$row_user['id'].'" class="btn btn-success">Show Downline</a>';
-             if ($row_user['status'] == 1) {
-             	$action = $action.'<a href=php/users/user_status_update.php?u_id='.$row_user['id'].'&status=2" class="btn btn-danger">Deactivate</a>';
-             }elseif ($row_user['status'] == 2) {
-             	$action = $action.'<a href="php/users/user_status_update.php?u_id='.$row_user['id'].'&status=1" class="btn btn-success">Activate</a>';
-             }
-             $action = $action.'<a href="add_wallet_form.php?u_id='.$row_user['id'].'" class="btn btn-success">Add Wallet Balance</a>';
-             $action = $action.'<a href="deduct_wallet_form.php?u_id='.$row_user['id'].'" class="btn btn-danger">Deduct Wallet Balance</a>';
-
+			
+            if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 1) {
+                $action = '<a href="user_view.php?u_id='.$row_user['id'].'" class="btn btn-success">View</a>
+					<a href="edit_user.php?u_id='.$row_user['id'].'" class="btn btn-success">Edit</a>
+					<a href="show_downline.php?u_id='.$row_user['id'].'" class="btn btn-success">Show Downline</a>';
+				if ($row_user['status'] == 1) {
+					$action = $action.'<a href=php/users/user_status_update.php?u_id='.$row_user['id'].'&status=2" class="btn btn-danger">Deactivate</a>';
+				}elseif ($row_user['status'] == 2) {
+					$action = $action.'<a href="php/users/user_status_update.php?u_id='.$row_user['id'].'&status=1" class="btn btn-success">Activate</a>';
+				}
+				$action = $action.'<a href="add_wallet_form.php?u_id='.$row_user['id'].'" class="btn btn-success">Add Wallet Balance</a>';
+				$action = $action.'<a href="deduct_wallet_form.php?u_id='.$row_user['id'].'" class="btn btn-danger">Deduct Wallet Balance</a>';
+				$credit_sql = "SELECT * from `user_credit` WHERE `user_id` = '$row_user[id]'";
+				if($res_credit = $connection->query($credit_sql)){
+					$row_credit = $res_credit->fetch_assoc();
+					if ($row_credit['amount'] > 0) {
+						$action .= '<a href="receive_credit_form.php?u_id='.$row_user['id'].'" class="btn btn-success">Receive Credit Balance</a>';
+					}
+				}
+			}else{
+				$action = '<a href="user_view.php?u_id='.$row_user['id'].'" class="btn btn-success">View</a>';
+			}
              $wallet_sql = "SELECT * FROM `wallet` WHERE `user_id`='$row_user[id]' limit 1";
              if ($res_wallet = $connection->query($wallet_sql)) {
              	if ($res_wallet->num_rows > 0) {
@@ -61,12 +72,12 @@ if (!empty($request['search']['value'])) {
              		}else{
              			$wallet_status = "<p class='btn btn-warning disabled'>Disabled</p>";
              		}
-             		$wallet = number_format($row_wallet['amount'],2);
-             		if ($row_wallet['status'] == 1) {
-             			$action = $action .'<a href="php/wallet/wallet_status_update.php?u_id='.$row_user['id'].'&status=2" class="btn btn-danger">Deactivate Wallet</a>';
-             		}else{
-             			$action = $action .'<a href="php/wallet/wallet_status_update.php?u_id='.$row_user['id'].'&status=1" class="btn btn-success">Activate Wallet</a>';
-             		}
+             		$wallet = number_format($row_wallet['total_amount'],2);
+             		// if ($row_wallet['status'] == 1) {
+             		// 	$action = $action .'<a href="php/wallet/wallet_status_update.php?u_id='.$row_user['id'].'&status=2" class="btn btn-danger">Deactivate Wallet</a>';
+             		// }else{
+             		// 	$action = $action .'<a href="php/wallet/wallet_status_update.php?u_id='.$row_user['id'].'&status=1" class="btn btn-success">Activate Wallet</a>';
+             		// }
 					
              	}else{
              		$wallet = '0.00';

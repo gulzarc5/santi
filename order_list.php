@@ -62,7 +62,11 @@
 
                   <center>
                     <a class="btn btn-success" name="search" id="serach_id">Search</a>
+                    <?php
+                    if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 1) {
+                    ?>
                     <a class="btn btn-info"  id="export_excel">Export Excel</a></center>
+                    <?php } ?>
                   </center>
                   
                 </form>
@@ -90,11 +94,11 @@
                       
               <tbody id="mainTable">
                 <?php             
-
+	              $employee_id = $_SESSION['admin_user_id'];
                   if (isset($_GET['s_date']) && isset($_GET['e_date']) && !empty($_GET['s_date']) && !empty($_GET['e_date'])) {
                     $s_date = $connection->real_escape_string(mysql_entities_fix_string($_GET['s_date']));          
                     $e_date = $connection->real_escape_string(mysql_entities_fix_string($_GET['e_date']));
-                    $sql_user_order = "SELECT * FROM `orders` WHERE `date` BETWEEN '$s_date' AND '$e_date' ORDER BY `id` DESC";
+                    $sql_user_order = "SELECT * FROM `orders` WHERE `employee_id`='$employee_id' AND (`date` BETWEEN '$s_date' AND '$e_date') ORDER BY `id` DESC";
                     if ($res_user_order = $connection->query($sql_user_order)) {
                       $count = 1;
                       while($user_order_row = $res_user_order->fetch_assoc()){
@@ -138,8 +142,13 @@
                   }else{
                     $s_date = date('Y-m-d');
                     $e_date = date('Y-m-d');
-
-                    $sql_user_order = "SELECT * FROM `orders` WHERE `date` BETWEEN '$s_date' AND '$e_date' ORDER BY `id` DESC";
+                    if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 1) {
+                      $sql_user_order = "SELECT * FROM `orders` WHERE (`date` BETWEEN '$s_date' AND '$e_date') ORDER BY `id` DESC";
+                    }else{
+                      $sql_user_order = "SELECT * FROM `orders` WHERE `employee_id`='$employee_id' AND (`date` BETWEEN '$s_date' AND '$e_date') ORDER BY `id` DESC";
+                    }
+                    $total_order_amount = 0;
+                    $total_cash_receive = 0;
                     if ($res_user_order = $connection->query($sql_user_order)) {
                       $count = 1;
                       while($user_order_row = $res_user_order->fetch_assoc()){
@@ -156,6 +165,10 @@
                         }else{
                           $orderFrom = '<p">App</p">';
                         }
+
+                        $total_order_amount+= $user_order_row['total'];
+                        $total_cash_receive+= $user_order_row['cash_payment'];
+
                         $time_format = date("g:i a", strtotime($user_order_row['time']));
                         print "<tr>
                         <td>$count</td>
@@ -172,7 +185,8 @@
                         print "<a class='btn btn-success' href='view_orders.php?id=$user_order_row[id]'>View</a>";
 
                         if ($user_order_row['status'] == 1) {
-                          print "<a class='btn btn-success' href='php/orders/order_status_update.php?id=$user_order_row[id]'>Delivered</a></td>";
+                          print "<a class='btn btn-success' href='php/orders/order_status_update.php?id=$user_order_row[id]'>Delivered</a>
+                          <a class='btn btn-success' href='service_charge_form.php?id=$user_order_row[id]'>Add Service Charge</a></td>";
                         }else{
                            print "<!--<a class='btn btn-success' href='order_status_update.php?id=$user_order_row[id]'>Pending</a>--!>";
                         }
@@ -180,6 +194,13 @@
                         "</td></tr>";
                         $count++;
                       }
+
+                      print "<tr>
+                        <td colspan='3'>Total Order Amount</td>
+                        <td>$total_order_amount</td>
+                        <td colspan='3'>Total Cash Receive</td>
+                        <td colspan='4'>$total_cash_receive</td>
+                      </tr>";
                     }
                   }
                 ?>                        

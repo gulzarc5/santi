@@ -41,7 +41,7 @@ if(isset($_POST['update_product']) && !empty($_POST['p_id'])){
    }
 
    if (!empty($bar_code)) {
-    $sql_p_check_bar_code = "SELECT * FROM `product` WHERE `barcode`='$bar_code' AND `id` != '$p_id'";
+    $sql_p_check_bar_code = "SELECT * FROM `product` WHERE LEFT(`barcode`,12)='$bar_code' AND `id` != '$p_id' `is_delete`!='2'";
     if ($res_p_check_bar_code = $connection->query($sql_p_check_bar_code)) {
         if ($res_p_check_bar_code->num_rows > 0) {
                 header("location:../../product_edit.php?p_id=".$p_id."&msg=7");
@@ -84,7 +84,7 @@ if(isset($_POST['update_product']) && !empty($_POST['p_id'])){
         // Image Check section end
         // Update Product 
 
-        $sql_update_product = "UPDATE `product` SET `name`='$name',`mrp`='$mrp',`category_id`='$category',`sub_cat_id`='$sub_category',`description`='$description',`hsn_code` = '$hsn_code',`cost`='$cost',`cash_back` = '$cash_back',`promotional_bonus` = '$promotional_bonus', `cgst` = '$cgst',`cgst_percent` = '$cgst_percent',`sgst` = '$sgst',`sgst_percent` = '$sgst_percent',`price`='$price', `stock`='$stock', `expiry_date` = '$expiry_date' WHERE `id`='$p_id'";
+        $sql_update_product = "UPDATE `product` SET `name`='$name',`mrp`='$mrp',`category_id`='$category',`barcode`='$bar_code',`sub_cat_id`='$sub_category',`description`='$description',`hsn_code` = '$hsn_code',`cost`='$cost',`cash_back` = '$cash_back',`promotional_bonus` = '$promotional_bonus', `cgst` = '$cgst',`cgst_percent` = '$cgst_percent',`sgst` = '$sgst',`sgst_percent` = '$sgst_percent',`price`='$price', `stock`='$stock', `expiry_date` = '$expiry_date' WHERE `id`='$p_id'";
         // echo $sql_update_product;
         // die();
         if ($res_update_product = $connection->query($sql_update_product)) {

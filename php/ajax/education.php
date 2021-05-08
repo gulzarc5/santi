@@ -43,7 +43,7 @@ if ($res = $connection->query($sql)) {
 	while ($row = $res->fetch_assoc()) {
 		$action = '<a href="product_view.php?p_id='.$row['id'].'&page=1005" class="btn btn-info">View</a>';
 		if ($row['is_star_product'] == '1') {
-			$action .= '<a href="php/product/make_star_product.php?p_id='.$row['id'].'&page=1005" class="btn btn-primary">Make Star Product</a>';
+			$action .= '<a href="php/product/make_star_product.php?p_id='.$row['id'].'&page=1005" class="btn btn-primary">Make Free Shopping Product</a>';
 		}
 		$action .= '<a href="product_edit.php?p_id='.$row['id'].'&page=1005" class="btn btn-success">Edit</a>
             <a href="php/product/product_delete.php?p_id='.$row['id'].'&page=1005" class="btn btn-danger">Delete</a>

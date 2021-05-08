@@ -1,4 +1,5 @@
 <?php
+ini_set("include_path", '/home/eh2vhbhagwzy/php:' . ini_get("include_path") );
 include "../admin_login_system/php_user_session_check.php";
 include "../database/connection.php";
 

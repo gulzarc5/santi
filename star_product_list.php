@@ -23,7 +23,7 @@
                 }
             ?>
             <div class="x_title">
-              <h2>Star Product List <small></small></h2>
+              <h2>Free Shopping Product List <small></small></h2>
               <div class="clearfix"></div>
               </div>
             

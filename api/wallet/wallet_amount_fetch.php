@@ -16,7 +16,7 @@
 	 				'id' => $row['id'],
 	 				'user_id' => $row['user_id'],
 	 				'inactive_amount' => $row['current_cashback_amount'],
-	 				'active_amount' => $row['amount'],
+	 				'active_amount' => $row['total_amount'],
 	 				'total_amount' => $row['total_amount'],
 	 				'status' => $row['status'],
 	 			];

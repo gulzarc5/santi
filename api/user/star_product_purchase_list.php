@@ -21,7 +21,10 @@
 
                 $star_product_sql = "SELECT `orders_star`.`created_at` as purchase_date, `product`.`name` AS p_name, `product`.`mrp` AS mrp,`product`.`price` AS price, `product`.`image` as image FROM `orders_star` LEFT JOIN `product` ON `product`.`id` = `orders_star`.`p_id` WHERE  MONTH(`orders_star`.created_at) = '$month' AND YEAR(`orders_star`.created_at) = '$year' AND `orders_star`.`user_id`='$user_id' ORDER BY `orders_star`.`id` DESC LIMIT $limit,10";
                 if ($res_star_product = $connection->query($star_product_sql)) {
-                    $data = $res_star_product -> fetch_all(MYSQLI_ASSOC);
+                    $data = [];
+                    while($row = $res_star_product->fetch_assoc()){
+                        $data[]=$row;
+                    }
                     $response =[
                         "status" => true,
                         'message' => 'Star Product purchase List',

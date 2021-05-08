@@ -1,5 +1,5 @@
 <?php
-// include "../admin_login_system/php_user_session_check.php";
+include "../admin_login_system/php_user_session_check.php";
 include "../database/connection.php";
 date_default_timezone_set('Asia/Kolkata');
 
@@ -10,10 +10,15 @@ date_default_timezone_set('Asia/Kolkata');
         $s_time = $connection->real_escape_string(mysql_entities_fix_string($_POST['s_time']));
         $e_time = $connection->real_escape_string(mysql_entities_fix_string($_POST['e_time']));
         $res = null;
+        $employee_id = $_SESSION['admin_user_id'];
         if (!empty($s_date) && !empty($e_date) && empty($s_time)) {
           $s_time_24  = "00:00:00";
           $e_time_24  = "23:59:59";
-          $sql = "SELECT * FROM `orders` WHERE (`date` BETWEEN '$s_date' AND '$e_date' ) AND (`time` BETWEEN '$s_time_24' AND '$e_time_24') ORDER BY `id` DESC";
+          if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 1) {
+            $sql = "SELECT * FROM `orders` WHERE  (`date` BETWEEN '$s_date' AND '$e_date' ) AND (`time` BETWEEN '$s_time_24' AND '$e_time_24') ORDER BY `id` DESC";
+          }else{
+            $sql = "SELECT * FROM `orders` WHERE `employee_id`='$employee_id' AND (`date` BETWEEN '$s_date' AND '$e_date' ) AND (`time` BETWEEN '$s_time_24' AND '$e_time_24') ORDER BY `id` DESC";
+          }
            if ($res = $connection->query($sql)) {
                 
             }else{
@@ -25,8 +30,12 @@ date_default_timezone_set('Asia/Kolkata');
             $e_time_24  = date("H:i:s", strtotime($e_time));
             $s_date = date('Y-m-d');
             $e_date = date('Y-m-d');
+            if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 1) {
+              $sql = "SELECT * FROM `orders` WHERE (`date` BETWEEN '$s_date' AND '$e_date' ) AND (`time` BETWEEN '$s_time_24' AND '$e_time_24') ORDER BY `id` DESC";
+            }else{
+              $sql = "SELECT * FROM `orders` WHERE `employee_id`='$employee_id' AND  (`date` BETWEEN '$s_date' AND '$e_date' ) AND (`time` BETWEEN '$s_time_24' AND '$e_time_24') ORDER BY `id` DESC";
 
-            $sql = "SELECT * FROM `orders` WHERE (`date` BETWEEN '$s_date' AND '$e_date' ) AND (`time` BETWEEN '$s_time_24' AND '$e_time_24') ORDER BY `id` DESC";
+            }
             // echo $sql;
             if ($res = $connection->query($sql)) {
                echo $res->num_rows;
@@ -37,7 +46,12 @@ date_default_timezone_set('Asia/Kolkata');
           $s_time_24  = date("H:i:s", strtotime($s_time));
           $e_time_24  = date("H:i:s", strtotime($e_time));
 
-          $sql = "SELECT * FROM `orders` WHERE (`date` BETWEEN '$s_date' AND '$e_date' ) AND (`time` BETWEEN '$s_time_24' AND '$e_time_24') ORDER BY `id` DESC";
+          if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 1) {
+            $sql = "SELECT * FROM `orders` (`date` BETWEEN '$s_date' AND '$e_date' ) AND (`time` BETWEEN '$s_time_24' AND '$e_time_24') ORDER BY `id` DESC";
+          }else{
+            $sql = "SELECT * FROM `orders` WHERE `employee_id`='$employee_id' AND  (`date` BETWEEN '$s_date' AND '$e_date' ) AND (`time` BETWEEN '$s_time_24' AND '$e_time_24') ORDER BY `id` DESC";
+
+          }
            if ($res = $connection->query($sql)) {
                 
             }else{
@@ -46,6 +60,8 @@ date_default_timezone_set('Asia/Kolkata');
         }
         $html = null;
         $count = 1;
+        $total_order_amount = 0;
+        $total_cash_receive = 0;
         if (!empty($res)) {
           if ($res->num_rows > 0) {
              while ($row = $res->fetch_assoc()) {
@@ -73,6 +89,9 @@ date_default_timezone_set('Asia/Kolkata');
               $orderFrom = '<p">App</p">';
             }
 
+            $total_order_amount+= $row['total'];
+            $total_cash_receive+= $row['cash_payment'];
+
               $html = $html."<tr>
                         <td>$count</td>
                         <td>$row[id]</td>
@@ -87,6 +106,13 @@ date_default_timezone_set('Asia/Kolkata');
                         <td>$action</td></tr>";
               $count++;
             }
+
+            $html = $html."<tr>
+                        <td colspan='3'>Total Order Amount</td>
+                        <td>$total_order_amount</td>
+                        <td colspan='3'>Total Cash Receive</td>
+                        <td colspan='4'>$total_cash_receive</td>
+                      </tr>";
           }else{
               $html = $html."<tr><td>No Orders Found</td></tr>";
           }

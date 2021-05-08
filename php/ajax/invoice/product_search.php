@@ -5,7 +5,11 @@ header("content-type: application/json");
 
 if (isset($_POST['search_key']) && !empty($_POST['search_key'])) {
 	$search_key = $_POST['search_key'];
-	$sql = "SELECT `product`.*,`category`.`name` as c_name FROM `product` LEFT JOIN `category` ON `category`.`id` = `product`.`category_id` WHERE `product`.`barcode` = '$search_key'";
+    $numlength = strlen((string)$search_key);
+    if($numlength > 12){
+        $search_key = substr($search_key, 0, 12);
+    }
+	$sql = "SELECT `product`.*,`category`.`name` as c_name FROM `product` LEFT JOIN `category` ON `category`.`id` = `product`.`category_id` WHERE  LEFT(`product`.`barcode`,12) = '$search_key'";
 
 	if ($res_sql = $connection->query($sql)) {
 		if ($res_sql->num_rows > 0) {

@@ -16,7 +16,11 @@
 				}
 				$row['related_products'] = [];
 				if ($res_related = $connection->query($sql_related)) {
-					$row['related_products'] = $res_related->fetch_all(MYSQLI_ASSOC);
+
+					while($row_releted = $res_related->fetch_assoc()){
+					    $data[]=$row_releted;
+					}
+					$row['related_products'] = $data;
 				}
 				
 	 			$response =[

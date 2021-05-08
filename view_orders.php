@@ -129,27 +129,27 @@
               		<table>
                     <tr>
                       <th>Address : </th>
-                      <td><?php echo $row_s_address['location'] ?></td>
+                      <td><?php if(!empty($row_s_address['location'])){  echo $row_s_address['location'];} ?></td>
                     </tr>
                     <tr>
                       <th>City : </th>
-                      <td><?php echo $row_s_address['city'] ?></td>
+                      <td><?php if(!empty($row_s_address['city'])){echo $row_s_address['city'];} ?></td>
                     </tr>
               			<tr>
               				<th>State : </th>
-              				<td><?php echo $row_s_address['state'] ?></td>
+              				<td><?php if(!empty($row_s_address['state'])){echo $row_s_address['state'];} ?></td>
               			</tr>
                     <tr>
                       <th>Pin : </th>
-                      <td><?php echo $row_s_address['pin'] ?></td>
+                      <td><?php if(!empty($row_s_address['pin'])){echo $row_s_address['pin'];} ?></td>
                     </tr>
                     <tr>
                       <th>Email : </th>
-                      <td><?php echo $row_s_address['email'] ?></td>
+                      <td><?php if(!empty($row_s_address['email'])){echo $row_s_address['email'];} ?></td>
                     </tr>
                     <tr>
                       <th>Mobile : </th>
-                      <td><?php echo $row_s_address['mobile'] ?></td>
+                      <td><?php if(!empty($row_s_address['mobile'])){echo $row_s_address['mobile'];} ?></td>
                     </tr>
               		</table>
               		<?php } ?>
@@ -170,57 +170,89 @@
             <div class="x_content table-responsive">
               <table class="table table-striped jambo_table bulk_action" cellspacing="0" width="100%">
                 <thead>
-                  <tr>
+                <tr>
                     <th>Sl</th>
                     <th>Product Name</th>
+                    <th>Sale Price</th>
                     <th>Quantity</th>
-                    <th>Rate</th>
-                    <th>Price</th>
+                    <th>Save</th>
+                    <th>Amount</th>
                   </tr>
                 </thead>
                         
                 <tbody>
                   <?php
-                    $sql_user_order = "SELECT `product`.`name` AS p_name,`order_details`.`price` AS o_price, `order_details`.`quantity` AS o_quantity,`order_details`.`price` AS o_price  FROM `order_details` INNER JOIN `product` ON `product`.`id` = `order_details`.`p_id` WHERE `order_details`.`order_id` ='$order_id'";
+                    $sql_user_order = "SELECT `orders`.`cash_payment` as cash_payment,`orders`.`user_id` as userr_id ,`orders`.`service_charge` as service_charge,`product`.`name` AS p_name,`product`.`mrp` AS mrp, `order_details`.`price` AS o_price, `order_details`.`quantity` AS o_quantity,`order_details`.`price` AS o_price  FROM `order_details` INNER JOIN `product` ON `product`.`id` = `order_details`.`p_id`   INNER JOIN `orders` ON `orders`.`id` = `order_details`.`order_id` WHERE `order_details`.`order_id` ='$order_id'";
                     if ($res_user_order = $connection->query($sql_user_order)) {
                       $count = 1;
+                      $total_save_amount = 0;
+                      $total_amount=0;
+                      $cash_payment = 0;
                       while($user_order_row = $res_user_order->fetch_assoc()){
                         $price = $user_order_row['o_quantity'] * floatval($user_order_row['o_price']);
-                       
+                        $save_amount = ($user_order_row['mrp']-$user_order_row['o_price'])*$user_order_row['o_quantity'];
+                        $service_charge= 0;
                         print "<tr>
                         <td>$count</td>
-                        <td>$user_order_row[p_name]</td>
-                        <td>$user_order_row[o_quantity]</td>
+                        <td>$user_order_row[p_name]<span style='display:block;'>MRP : $user_order_row[mrp]</span></td>
                         <td>$user_order_row[o_price]</td>
+                        <td>$user_order_row[o_quantity]</td>
+                        <td>$save_amount</td>
                         <td>$price</td>";
                         
                         "</tr>";
+                        $total_amount += ($user_order_row['o_price']*$user_order_row['o_quantity']);
+                        $service_charge +=$user_order_row['service_charge'];
+                        $cash_payment+=$user_order_row['cash_payment'];
+                        
+                        $total_save_amount +=number_format(($user_order_row['mrp']-$user_order_row['o_price'])*$user_order_row['o_quantity'],2);
                         $count++;
                       }
 
-                      $gross_amount = floatval($row_order['amount']) - floatval($row_order['discount']);
                       print "<tr>
-                              <td colspan='4' align='right'>Total : </td>
-                              <td>".number_format($row_order['amount'],2)."</td>
-                            </tr>
-                            <tr>
-                              <td colspan='4' align='right' >Gross Amount : </td>
-                              <td>".number_format($gross_amount,2)."</td>
-                            </tr>
-                            <tr>
-                              <td colspan='4' align='right' >Wallet Pay : </td>
-                              <td>".number_format($row_order['wallet_pay'],2)."</td>
-                            </tr>
-                          
-                            <tr>
-                              <td colspan='4' align='right' >Net Payable Amount : </td>
-                              <td>".number_format($row_order['total'],2)."</td>
-                            </tr>";
+                      <td colspan='4' align='right'>Total : </td>
+                      <td>".number_format($total_save_amount,2,'.', '')."</td>
+                      <td>".number_format($total_amount,2,'.', '')."</td>
+                    </tr>
+                    <tr>
+                      <td colspan='5' align='right'>Free Shopping- </td>
+                      <td>".number_format($row_order['wallet_pay'],2,'.', '')."</td>                             
+                    </tr>
+                    <tr>
+                      <td colspan='5' align='right'>Net Total- </td>
+                      <td>".number_format(($total_amount-$row_order['wallet_pay']),2,'.', '')."</td>                             
+                    </tr>
+                    <tr>
+                      <td colspan='5' align='right'>Previous Balance- </td>
+                      <td>".number_format(($row_order['prev_balance']),2,'.', '')."</td>                             
+                    </tr>
+                    <tr>
+                      <td colspan='5' align='right'>Payment Amount- </td>
+                      <td>".number_format(($row_order['prev_balance']+($total_amount-$row_order['wallet_pay'])),2,'.', '')."</td>                             
+                    </tr>
+                    <tr>
+                      <td colspan='5' align='right'>Service Charge- </td>
+                      <td>".number_format($service_charge,2,'.', '')."</td>
+                    </tr>
+                    <tr>
+                      <td colspan='5' align='right'>Gross Amount- </td>
+                      <td>".number_format ((($row_order['prev_balance']+($total_amount-$row_order['wallet_pay']))+$service_charge),2,'.', '')."</td>
+                    </tr>
+                      <td colspan='5' align='right' >Cash Payment : </td>
+                      <td>".number_format($row_order['cash_payment'],2,'.', '')."</td>
+                    </tr>
+                  
+                    <tr>
+                      <td colspan='5' align='right'>Balance : </td>
+                      <td>".number_format(((($row_order['prev_balance']+($total_amount-$row_order['wallet_pay']))+$service_charge)-$row_order['cash_payment']),2,'.', '')."</td>
+                    </tr>
+                    
+                    ";
                     }
                   ?>   
                   <tr>
                     <td align="center" colspan="5">
-                      <button class="btn btn-info" onclick="printDiv()">Print</button>
+                      <a class="btn btn-info" target ="_blank" href="print.php?id=<?php echo $row_order['id']?>" >Print</a>
                       <?php
                       if (isset($_GET['s_date']) && isset($_GET['e_date'])) {
                         $s_date = $connection->real_escape_string(mysql_entities_fix_string($_GET['s_date']));          

@@ -1,4 +1,5 @@
 <?php
+
 include "../admin_login_system/php_user_session_check.php";
 include "../database/connection.php";
 
@@ -12,10 +13,10 @@ if ($_POST['submit']) {
 		date_default_timezone_set('Asia/Kolkata');
  		$date = date('Y-m-d');
 	 	$time = date('H:i:s');
-		$new_amount = $amount + floatval($row['amount']);
+	
 		$total_amount = $amount + floatval($row['total_amount']);
 
-		$sql_update = "UPDATE `wallet` SET `amount`='$new_amount', `total_amount`= '$total_amount' WHERE `id`='$row[id]'";
+		$sql_update = "UPDATE `wallet` SET  `total_amount`= '$total_amount' WHERE `id`='$row[id]'";
 		if ($res_update = $connection->query($sql_update)) {
 
 			$sql_wallet_history = "INSERT INTO `wallet_history`(`id`, `user_id`,`wallet_id`, `transaction_type`, `amount`,`total`, `comments`, `date`, `time`) VALUES (null,'$u_id','$row[id]','2','$amount','$total_amount','Balance Creditrd By Shantirekha','$date','$time')";

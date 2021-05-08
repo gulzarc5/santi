@@ -5,7 +5,12 @@ include "include/header.php";
         <!-- page content -->
         <div class="right_col" role="main">
 
-          
+        <?php 
+        $employee_id = $_SESSION['admin_user_id'];
+        $s_date = date('Y-m-d');
+        $e_date = date('Y-m-d');
+          if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 1) {
+        ?>
           <!-- top tiles -->
           <div class="row tile_count">
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -84,7 +89,51 @@ include "include/header.php";
             </div>
           </div>
           <!-- /top tiles -->
+        <?php }else{ ?>
+           <!-- top tiles -->
+          <div class="row tile_count">
+            <div class="col-md-4 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total Orders Today</span>
+              <div class="count green">
+                <?php
+                  $order_count_sql ="SELECT `id`  FROM `orders` WHERE `employee_id` = '$employee_id'  AND (`date` BETWEEN '$s_date' AND '$e_date')";
+                  if ($res_order_count_sql = $connection->query($order_count_sql)) {
+                    echo "$res_order_count_sql->num_rows";
+                  }
+                ?>
+              </div>
+              <!-- <span class="count_bottom"><i class="green">4% </i> From last Week</span> -->
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-clock-o"></i> Total Order Amount Today </span>
+              <div class="count green">
+                 <?php
+                  $order_amount_sql ="SELECT SUM(`amount`) as amount FROM `orders`  WHERE `employee_id` = '$employee_id'  AND (`date` BETWEEN '$s_date' AND '$e_date')";
+                  if ($res_order_amount = $connection->query($order_amount_sql)) {
+                    $order_amount_row = $res_order_amount->fetch_assoc();
+                   echo $order_amount_row['amount'];
+                  }
+                ?>
+              </div>
+              <!-- <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span> -->
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total Cash Receive Today</span>
+              <div class="count green">
+                 <?php
+                 $order_amount_sql ="SELECT SUM(`cash_payment`) as amount FROM `orders`  WHERE `employee_id` = '$employee_id'  AND (`date` BETWEEN '$s_date' AND '$e_date')";
+                 if ($res_order_amount = $connection->query($order_amount_sql)) {
+                   $order_amount_row = $res_order_amount->fetch_assoc();
+                  echo $order_amount_row['amount'];
+                 }
+                ?>
+                <!--  -->
+              </div>
+              <!-- <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> -->
+            </div>
 
+          <!-- /top tiles -->
+        <? } ?>
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div style="color: red; font-weight: bold; font-size: 20px;">Last 10 Orders</div>
@@ -103,13 +152,20 @@ include "include/header.php";
                   </thead>
                   <tbody>
                        <?php
+                       if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 1) {
                           $sql_user_order = "SELECT * FROM `orders` ORDER BY `id` DESC LIMIT 10";
+                        }else{
+                         $sql_user_order = "SELECT * FROM `orders` WHERE `employee_id` = '$employee_id' ORDER BY `id` DESC LIMIT 10";
+
+                       }
                   if ($res_user_order = $connection->query($sql_user_order)) {
                     $count = 1;
                     while($user_order_row = $res_user_order->fetch_assoc()){
                       $amount = number_format($user_order_row['amount'],2);
                       $wallet_pay = number_format($user_order_row['wallet_pay'],2);
                       $payable_amount = number_format($user_order_row['total'],2);
+                      $service_charge = number_format($user_order_row['service_charge'],2);
+                      $total_payable_amount = $payable_amount+$service_charge;
                       $time_format = date("g:i a", strtotime($user_order_row['time']));
                       print "<tr>
                       <td>$count</td>
@@ -117,7 +173,7 @@ include "include/header.php";
                       <td>$user_order_row[user_id]</td>
                       <td>$amount</td>
                       <td>$wallet_pay</td>
-                      <td>$payable_amount</td>
+                      <td>$total_payable_amount</td>
                       <td>$user_order_row[date]</td>
                       <td>$time_format</td></tr>";
                       $count++;

@@ -1,6 +1,5 @@
 <?php
 	include_once '../../php/database/connection.php';
-	// include_once '../security/device_id_check';
  	header("content-type: application/json");
 	$sql = "SELECT * FROM `category`";
 	if ($res = $connection->query($sql)) {

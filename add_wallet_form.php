@@ -42,7 +42,7 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name"> 
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <?php  echo "<b style='color:#ff9800;'>Current Wallet Balance = </b><b style='color:#26B99A;'>".number_format($row_wallet['amount'],2)."</b>"; ?>
+                  <?php  echo "<b style='color:#ff9800;'>Current Wallet Balance = </b><b style='color:#26B99A;'>".number_format($row_wallet['total_amount'],2)."</b>"; ?>
                 </div>
               </div>
               <div class="form-group">

@@ -5,7 +5,7 @@ header("content-type: application/json");
 $request = $_REQUEST;
 
 
-$sql_count = "SELECT * FROM `users` WHERE `status` = '1' AND `user_type` != '1'";
+$sql_count = "SELECT * FROM `users` WHERE `status` = '1' AND `user_type` = '1=2'";
 
 //Searching 
 if (!empty($request['search']['value'])) {
@@ -21,7 +21,7 @@ if ($res_count = $connection->query($sql_count)) {
 }
 
 
-$sql = "SELECT * FROM `users` WHERE `status` = '1' AND `user_type` != '1'";
+$sql = "SELECT * FROM `users` WHERE `status` = '1' AND `user_type` = '2'";
 
 if (!empty($request['search']['value'])) {
 	$sql = $sql."  AND (`name` LIKE '%$srch_key%' OR `email`  LIKE '%$srch_key%' OR `mobile` LIKE '%$srch_key%')";
@@ -86,8 +86,7 @@ if (!empty($request['search']['value'])) {
 				$row_user['id'],
 				$user_name,
 				$row_user['mobile'],
-				$current_wallet,
-				$prev_wallet,
+				
 				$total_wallet,
 				$wallet_status,
 			];

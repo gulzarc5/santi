@@ -121,7 +121,7 @@ function barcode( $filepath="", $text="0", $size="20", $orientation="horizontal"
 	$image = imagecreate($img_width, $img_height + $text_height);
 	$black = imagecolorallocate ($image, 0, 0, 0);
 	$white = imagecolorallocate ($image, 255, 255, 255);
-	// $text = wordwrap($text , 1 , ' ' , true );
+	$text = wordwrap($text , 3 , ' ' , true );
 	imagefill( $image, 0, 0, $white );
 	if ( $print ) {
 		imagestring($image, 5, 50, $img_height, $text, $black );

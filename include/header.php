@@ -54,7 +54,7 @@ function mysql_fix_string($string){
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_info">
-                <h2>Welcome Admin</h2>
+                <h2>Welcome <?=$_SESSION['admin_name']?></h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -72,26 +72,55 @@ function mysql_fix_string($string){
                     <ul class="nav child_menu">
                       <li><a href="add_user_form.php">Add User</a></li>
                       <li><a href="user_list.php">Activated User List</a></li>
+                      <?php 
+                        if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 1) {
+                      ?>
                       <li><a href="deactivated_user_list.php">DeActivated User List</a></li>
-                      <li><a href="user_wallet_list.php">User Wallet List</a></li>                      
+                      <li><a href="user_wallet_list.php">User Wallet List</a></li> 
+                      <li><a href="user_credit_list.php">User Credit List</a></li>     
+                      <?php } ?>                 
+                    </ul>
+                  </li>
+                  <?php 
+                    if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 1) {
+                  ?>
+                  <li><a><i class="fa fa-edit"></i> Employee <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="add_employee_form.php">Add Employee</a></li>
+                      <li><a href="employee_list.php">Employee List</a></li>                  
                     </ul>
                   </li>
                   <li><a><i class="fa fa-edit"></i> Products <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="add_product_form.php">Add Product</a></li>
                       <li><a href="education.php">Product List</a></li>
-                      <li><a href="star_product_list.php">Star Product List</a></li>
+                      <li><a href="star_product_list.php">Free Shopping Product</a></li>
                       
                     </ul>
                   </li>
-
-                   <li><a><i class="fa fa-edit"></i> Orders <span class="fa fa-chevron-down"></span></a>
+                  <?php } ?>
+                   <li><a><i class="fa fa-edit"></i>All Orders <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="order_list.php">Order List</a></li>
+                      <?php 
+                        if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 1) {
+                      ?>
                       <li><a href="ordered_item.php">Ordered Item List</a></li>
+                      <?php } ?>
                     </ul>
                   </li>
 
+                  <?php 
+                    if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 1) {
+                  ?>
+
+                   <li><a><i class="fa fa-edit"></i>Employee Orders <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="employee_orders_list.php">Order List</a></li>
+                    </ul>
+                  </li>
+
+                 
 
                   <li><a><i class="fa fa-edit"></i> Discount <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
@@ -107,14 +136,17 @@ function mysql_fix_string($string){
                       <li><a href="category_list.php">Sub Category List</a></li>
                     </ul>
                   </li>
-                <li><a><i class="fa fa-edit"></i> App Slider <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-edit"></i> App Slider <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="add_slider_form.php">Add Slider</a></li>
                       <li><a href="slider_list.php">Sliders</a></li>
                     </ul>
-                  </li>
-                  <li><a href="customer_review.php"><i class="fa fa-edit"></i> Customers Review </span></a></li>
-                  <li><a href="star_member_chk.php?page=1" onclick="javascript:return confirm('Are you sure ?? you want to scan manually in the database. if maunaly scan it will not scan automatically in this month')"><i class="fa fa-edit"></i> Star Member Scan</span></a></li>
+                 </li>
+                 <li><a href="customer_review.php"><i class="fa fa-edit"></i> Customers Review </span></a></li>
+                 <?php } ?>
+                  <!-- <li><a href="star_member_chk.php?page=1" onclick="javascript:return confirm('Are you sure ?? you want to scan manually in the database. if maunaly scan it will not scan automatically in this month')"><i class="fa fa-edit"></i> Star Member Scan</span></a></li> -->
+                
+                  <li><a href="change_password.php"><i class="fa fa-key"></i>  Change Password </span></a></li>
                 </ul>
               </div>
             </div>
@@ -129,6 +161,7 @@ function mysql_fix_string($string){
               <div class="nav toggle">
                 <a id="menu_toggle"><i class="fa fa-bars"></i></a>
               </div>
+              <h2 style="display:inline-block;line-height:2.1">Welcome <?=$_SESSION['admin_name']?></h2>
 
               <ul class="nav navbar-nav navbar-right">
                 <li class="">

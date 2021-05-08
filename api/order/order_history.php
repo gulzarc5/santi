@@ -20,6 +20,7 @@
  							'order_price' => $row_ord_details['o_price'] ,
 							'order_quantity' => $row_ord_details['o_quantity'] ,
 							'total_cashback' => $row_ord_details['total_cashback'] ,
+							
 							'date' => $row_ord_details['dates'] ,
 							'time' => $row_ord_details['timedate'] ,
  						];
@@ -30,10 +31,12 @@
  					'total' => $row_orders['amount'],
  					'cashback' => $row_orders['cashback'],
  					'wallet_pay' => $row_orders['wallet_pay'],
- 					'payable_amount' => $row_orders['total'],
-					 'delivery_status' => $row_orders['status'],
-					 'date' => $row_orders['date'] ,
-					 'time' => $row_orders['time'] ,
+					'payable_amount' => $row_orders['total'],
+					'service_charge'=>	$row_orders['service_charge'],
+					'prev_balance'=>	$row_orders['prev_balance'],
+					'delivery_status' => $row_orders['status'],
+					'date' => $row_orders['date'] ,
+					'time' => $row_orders['time'] ,
  					'products' => $ord_details,
  					];
  			}

@@ -89,8 +89,8 @@ function showMessage($msg){
                           <th>id</th>
                           <th>Name</th>
                           <th>Mobile</th>                          
-                          <th>Current Month Balance</th>
-                          <th>Previous Balance</th>                          
+                          <!-- <th>Current Month Balance</th>
+                          <th>Previous Balance</th>                           -->
                           <th>Total Balance</th>
                           <th>Wallet Status</th>
                           <!-- <th>actions</th> -->
@@ -136,8 +136,7 @@ require_once "include/footer.php";
           null,
           null,
           null,
-          null,
-          null,
+        
           null,
           null,
         ],

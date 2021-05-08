@@ -28,7 +28,7 @@ require_once "include/header.php";
 				<h5 class="col-md-12 col-sm-12 col-xs-12"><strong>Barcode :</strong> 
 				<?php
 				if (!empty($product_row['barcode'])) {
-					print "<img alt='Image' src='php/barcode/barcode.php?codetype=Code39&size=50&text=$product_row[barcode]&print=true' />";
+					print "<img alt='Image' src='php/barcode/barcode_print.php?codetype=code25&size=80&text=$product_row[barcode]&print=true' style='height:93px' />";
 				}
 				?>
 				

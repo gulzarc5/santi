@@ -13,7 +13,6 @@
         
         // Check product is already addedd in star order of current month or not
         $check_current_month_star_sql = "SELECT * FROM `orders_star` WHERE MONTH(created_at) = '$month' AND YEAR(created_at) = '$year' AND `user_id`='$user_id'";
-        echo $check_current_month_star_sql;
         if ($res_check_current_month_star = $connection->query($check_current_month_star_sql)) {
             if ($res_check_current_month_star->num_rows > 0) {
                 $response =[

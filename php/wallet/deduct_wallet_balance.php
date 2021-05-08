@@ -12,14 +12,14 @@ if ($_POST['submit']) {
 		date_default_timezone_set('Asia/Kolkata');
  		$date = date('Y-m-d');
 	 	$time = date('H:i:s');
-		if ($row['amount'] < $amount) {
+		if ($row['total_amount'] < $amount) {
 			header("location:../../deduct_wallet_form.php?msg=3&u_id=$u_id");
 			die();
 		}
-		$new_amount = floatval($row['amount']) - $amount ;		
+			
 		$total_amount = floatval($row['total_amount']) - $amount ;
 
-		$sql_update = "UPDATE `wallet` SET `amount`='$new_amount', `total_amount`= '$total_amount' WHERE `id`='$row[id]'";
+		$sql_update = "UPDATE `wallet` SET  `total_amount`= '$total_amount' WHERE `id`='$row[id]'";
 		if ($res_update = $connection->query($sql_update)) {
 
 			$sql_wallet_history = "INSERT INTO `wallet_history`(`id`, `user_id`,`wallet_id`, `transaction_type`, `amount`,`total`, `comments`, `date`, `time`) VALUES (null,'$u_id','$row[id]','1','$amount','$total_amount','Balance Deducted By Shantirekha','$date','$time')";

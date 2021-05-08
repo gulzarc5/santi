@@ -1,0 +1,2 @@
+[30-Jan-2021 03:49:18 UTC] PHP Warning:  unlink(../../uploads/slider_image/thumb/): Is a directory in /home/eh2vhbhagwzy/public_html/php/slider/delete_slider.php on line 11
+[30-Jan-2021 03:49:18 UTC] PHP Warning:  unlink(../../uploads/slider_image/): Is a directory in /home/eh2vhbhagwzy/public_html/php/slider/delete_slider.php on line 12

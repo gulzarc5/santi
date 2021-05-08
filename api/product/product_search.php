@@ -47,6 +47,7 @@
 							'promotional_bonus' => $row_product['promotional_bonus'],
 							'is_star_product' => $row_product['is_star_product'],
 							'image' => $row_product['image'],
+							'stock'=>$row_product['stock']
 						];
 
 					}

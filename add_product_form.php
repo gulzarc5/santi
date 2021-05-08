@@ -1,4 +1,4 @@
-<?php
+Purchase <?php
   include "include/header.php";
 
   function showMessage($msg){
@@ -111,7 +111,7 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Purchase Cost <span class="required">*</span>
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                  <input type="number" cast="any"  name="cost" placeholder="Enter Purchase Cost"  class="form-control col-md-7 col-xs-12" required>
+                  <input type="number" step="any"  name="cost" placeholder="Enter Purchase Cost"  class="form-control col-md-7 col-xs-12" required>
                 </div>
               </div>
 
@@ -119,7 +119,7 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="price">M.R.P. <span class="required">*</span>
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                  <input type="number" cast="any"  name="mrp" placeholder="Enter Product MRP" class="form-control col-md-7 col-xs-12" required>
+                  <input type="number" step="any"  name="mrp" placeholder="Enter Product MRP" class="form-control col-md-7 col-xs-12" required>
                 </div>
               </div>
               
@@ -127,7 +127,7 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="price">Price <span class="required">*</span>
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                  <input type="number" cast="any" placeholder="Enter Sale Price"  name="price"  class="form-control col-md-7 col-xs-12" required>
+                  <input type="number" step="any" placeholder="Enter Sale Price"  name="price"  class="form-control col-md-7 col-xs-12" required>
                 </div>
               </div>
 
@@ -135,11 +135,11 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">CGST
                 </label>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                  <input type="number" cast="any"  name="cgst" placeholder="Enter CGST Amount"  class="form-control col-md-7 col-xs-12">
+                  <input type="number" step="any"  name="cgst" placeholder="Enter CGST Amount"  class="form-control col-md-7 col-xs-12">
                 </div>
 
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                  <input type="number" cast="any"  name="cgst_percent" placeholder="Enter CGST In %"  class="form-control col-md-7 col-xs-12">
+                  <input type="number" step="any"  name="cgst_percent" placeholder="Enter CGST In %"  class="form-control col-md-7 col-xs-12">
                 </div>
 
               </div>
@@ -148,11 +148,11 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">SGST
                 </label>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                  <input type="number" cast="any"  name="sgst" placeholder="Enter SGST"  class="form-control col-md-7 col-xs-12">
+                  <input type="number" step="any"  name="sgst" placeholder="Enter SGST"  class="form-control col-md-7 col-xs-12">
                 </div>
 
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                  <input type="number" cast="any"  name="sgst_percent" placeholder="Enter SGST In %"  class="form-control col-md-7 col-xs-12">
+                  <input type="number" step="any"  name="sgst_percent" placeholder="Enter SGST In %"  class="form-control col-md-7 col-xs-12">
                 </div>
 
               </div>
@@ -161,7 +161,7 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Cashback
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                  <input type="number" cast="any" placeholder="Enter Cash Back"  name="cash_back"  class="form-control col-md-7 col-xs-12">
+                  <input type="number" step="any" placeholder="Enter Cash Back"  name="cash_back"  class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 
@@ -169,7 +169,7 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Promotional Bonus
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
-                  <input type="number" cast="any" placeholder="Enter Promotional Bonus"  name="promotional_bonus"  class="form-control col-md-7 col-xs-12">
+                  <input type="number" step="any" placeholder="Enter Promotional Bonus"  name="promotional_bonus"  class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
 
@@ -264,8 +264,8 @@ include "include/footer.php";
             //           "<div class='col-12 col-md-7' id = '"+image_id+"' onclick='getImageBoxId(this.id)'><input type='file' id = 'input"+image_id+"' name='product_image[]'  class='form-control' onChange='validate(this.value)'></div>"+
             //            "<div class='col-12 col-md-2'><button type='button' class='btn btn-link'  class='form-control' id='"+image_id+"' onclick='removeImageDiv(this.id)'><i class='fa fa-link'></i>&nbsp;Remove</button></div></div>";
 
-           $("#more_sizes").append(size_html);
-           product_size_add_more_count = product_size_add_more_count+1;
+        $("#more_sizes").append(size_html);
+        product_size_add_more_count = product_size_add_more_count+1;
         
     });
 
@@ -360,6 +360,7 @@ include "include/footer.php";
    // check if input is bigger than 3
    var value = document.getElementById('bar_code').value;
    if (value) {
+       alert(value.length);
     if (value.length == 13) {
        return true;
       $("#bar_code_msg").html('df'); 

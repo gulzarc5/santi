@@ -23,7 +23,7 @@ $sg = new \SendGrid($apiKey);
 /*Response*/
 $response = $sg->client->mail()->send()->post($mail);
 if ($page == 1) {
-	header("location:")
+	header("location:");
 }
 ?>
 

@@ -58,6 +58,7 @@ if ($res = $connection->query($sql)) {
 			$row['category'],
 			$row['sub_category'],
 			$row['price'],
+			$row['regular_customer_price'],
 			$row['stock'],			
 			$action,
 		];

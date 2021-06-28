@@ -27,7 +27,8 @@ function showMessage($msg){
            <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Education Releted Products<small></small></h2>
+                    <h2>Product List<small></small></h2>
+                    <button id="stock_export" class="btn btn-xs btn-warning" style="float: right;">Export Stock List</button>
                     <div class="clearfix"></div>
                       <?php 
                         if (isset($_GET['msg'])) {
@@ -46,6 +47,7 @@ function showMessage($msg){
                           <th>Category</th>
                           <th>Sub Category</th>
                           <th>Price</th>
+                          <th>Regular CP</th>
                           <th>Stock</th>
                           <th>Action</th>
                         </tr>
@@ -85,12 +87,20 @@ require_once "include/footer.php";
         null,
         null,
         { "orderable": false },
+        { "orderable": false },
         ],
         "pageLength": 50,
       "ajax" :{
         url : "php/ajax/education.php",
         type : "post"
       }
+    });
+  });
+
+
+  $(document).ready(function(){
+    $("#stock_export").click(function(){
+      window.location.href = "php/export/stock_list.php";
     });
   });
 </script>

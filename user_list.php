@@ -72,7 +72,7 @@ function showMessage($msg){
            <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>User List<small></small></h2>
+                    <h2>User List <small></small></h2>
                     <div class="clearfix"></div>
                       <?php 
                         if (isset($_GET['msg'])) {
@@ -92,6 +92,7 @@ function showMessage($msg){
                           <th>Mobile</th>
                           <th>Wallet</th>
                           <th>Wallet Status</th>
+                          <th>Is Regular Customer</th>
                           <th>actions</th>
                         </tr>
                       </thead>
@@ -132,6 +133,7 @@ require_once "include/footer.php";
       "serverSide" : true,
        "columns": [
           { "orderable": false },
+          null,
           null,
           null,
           null,

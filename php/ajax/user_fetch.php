@@ -1,5 +1,5 @@
 <?php
-// include "../admin_login_system/php_user_session_check.php";
+include "../admin_login_system/php_user_session_check.php";
 include "../database/connection.php";
 header("content-type: application/json");
 $request = $_REQUEST;
@@ -41,7 +41,7 @@ if (!empty($request['search']['value'])) {
 		$data = [];
 		$count = 1;
 		while ($row_user = $res->fetch_assoc()) {
-			
+
             if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 1) {
                 $action = '<a href="user_view.php?u_id='.$row_user['id'].'" class="btn btn-success">View</a>
 					<a href="edit_user.php?u_id='.$row_user['id'].'" class="btn btn-success">Edit</a>
@@ -68,9 +68,9 @@ if (!empty($request['search']['value'])) {
              	if ($res_wallet->num_rows > 0) {
              		$row_wallet = $res_wallet->fetch_assoc();
              		if ($row_wallet['status'] == '1') {
-             			$wallet_status = "<p class='btn btn-success disabled'>Enabled</p>";
+             			$wallet_status = "<label class='label label-success disabled'>Enabled</label>";
              		}else{
-             			$wallet_status = "<p class='btn btn-warning disabled'>Disabled</p>";
+             			$wallet_status = "<label class='label label-warning disabled'>Disabled</label>";
              		}
              		$wallet = number_format($row_wallet['total_amount'],2);
              		// if ($row_wallet['status'] == 1) {
@@ -81,7 +81,7 @@ if (!empty($request['search']['value'])) {
 					
              	}else{
              		$wallet = '0.00';
-             		$wallet_status = "<p class='btn btn-success disabled'>Enabled</p>";
+             		$wallet_status = "<label class='label label-success disabled'>Enabled</label>";
              	}
              	
 			 }
@@ -89,6 +89,10 @@ if (!empty($request['search']['value'])) {
 			$user_name = $row_user['name'];
 			if ($row_user['is_star'] == 2) {
 				$user_name = '<i class="fa fa-star" aria-hidden="true" style="color: red;font-size: 22px;"></i> '.$row_user['name'];
+			}
+			$regular = "<label class='label label-warning'>No</label>";
+			if ($row_user['is_regular'] == 2) {
+				$regular = "<label class='label label-success'>Yes</label>";
 			}
 			$data[] = [
 				$count,
@@ -98,6 +102,7 @@ if (!empty($request['search']['value'])) {
 				$row_user['mobile'],
 				$wallet,
 				$wallet_status,
+				$regular,
 				$action,
 			];
 			$count++;

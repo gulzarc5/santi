@@ -22,8 +22,11 @@ if (isset($_POST['search_key']) && !empty($_POST['search_key'])) {
 					$prev_bal = $row_prev_bal['amount'];
 				}
 			}
-			$html =   '<h4>User Info</h4>
-	              <div class="col-md-6">     
+			$html =   '<h4>User Info &nbsp';
+			if ($row['is_regular'] == '2') {
+				$html.="<label class='label label-success'>Regular Customer</label>";
+			  }
+			$html.='</h4><div class="col-md-6">     
 	                <b>Name : </b> '.$row['name'].'
 	              </div>
 	              <div class="col-md-6">     

@@ -26,6 +26,7 @@
   }
 ?>      
 
+
 <div class="right_col" role="main">
   <div class="clearfix"></div>
   <div class="row">
@@ -104,16 +105,24 @@
             <div class="col-md-12" id="user_info">
               <?php
                 if (isset($row) && !empty($row)) {
-                  print '<h4>User Info</h4>
-                  <div class="col-md-6">     
-                    <b>Name : </b> '.$row['name'].'
-                  </div>
+                  print '<h4>User Info &nbsp';
+                  if ($row['is_regular'] == '2') {
+                    print "<label class='label label-success'>Regular Customer</label>";
+                  }
+
+                  print '</h4><div class="col-md-6">     
+                    <b>Name : </b> '.$row['name'].'</div>
                   <div class="col-md-6">     
                     <b>Mobile : </b> '.$row['mobile'].'
                     </div>      
                   <div class="col-md-6">     
                     <b>Free Shopping Balance : </b> '.$row['amount'].'
                   </div> ';
+                  if ($row['is_regular'] == '2') {
+                    print '<div class="col-md-6">     
+                    <b>Regular Customer </b> 
+                  </div> ';
+                  }
                 }
               ?>
             </div>
@@ -157,18 +166,44 @@
                    while($user_order_row = $res_user_order->fetch_assoc()){                 
                     print "<tr>
                     <td>$count</td>
-                    <td>$user_order_row[name]<span style='display:block;'>MRP : $user_order_row[mrp]</span></td>
-                    <td>".$user_order_row['price']."</td>
-                    <td>".$user_order_row['quantity_o']."</td>
-                    <td>".number_format(($user_order_row['mrp']-$user_order_row['price'])*$user_order_row['quantity_o'],2)."</td>
+                    <td>$user_order_row[name]<span style='display:block;'>MRP : $user_order_row[mrp]</span></td>";
+                    
+                    if (isset($row) && !empty($row)){
+                      if ($row['is_regular'] == 2) {
+                        print"<td>$user_order_row[regular_customer_price]</td>";
+                      } else {
+                        print"<td>$user_order_row[price]</td>";
+                      }
+                      
+                    }else{
+                      print"<td>$user_order_row[price]</td>";
+                    }
+
+                    $save = 0;
+                    $price_amount = 0;
+                    if (isset($row) && !empty($row)){
+                      if ($row['is_regular'] == 2) {
+                        $save = ($user_order_row['mrp']-$user_order_row['regular_customer_price'])*$user_order_row['quantity_o'];
+                        $price_amount = $user_order_row['regular_customer_price']*$user_order_row['quantity_o'];
+                      }else{
+                        $save = ($user_order_row['mrp']-$user_order_row['price'])*$user_order_row['quantity_o'];
+                        $price_amount = $user_order_row['price']*$user_order_row['quantity_o'];
+                      }
+                    }else{
+                      $save = ($user_order_row['mrp']-$user_order_row['price'])*$user_order_row['quantity_o'];
+                      $price_amount = $user_order_row['price']*$user_order_row['quantity_o'];
+                    }
+
+                    print"<td>".$user_order_row['quantity_o']."</td>
+                    <td>".number_format($save,2)."</td>
                    
-                    <td>".number_format($user_order_row['price']*$user_order_row['quantity_o'],2)."</td>
+                    <td>".number_format($price_amount,2)."</td>
                     <td><a href='php/invoice/remove_item.php?inv_id=".$user_order_row['inv_id']."' class='btn btn-sm btn-danger'>Remove</a></td>
                     </tr>";
                     $count++;
                     $total_cashback += ($user_order_row['cash_back']*$user_order_row['quantity_o']);
-                    $total_amount += ($user_order_row['price']*$user_order_row['quantity_o']);
-                    $total_save_amount +=number_format(($user_order_row['mrp']-$user_order_row['price'])*$user_order_row['quantity_o'],2);
+                    $total_amount += ($price_amount);
+                    $total_save_amount +=number_format($save,2);
                   }
 
                   $wallet_total_amount =0;
@@ -296,7 +331,8 @@ include "include/footer.php";
                 $("#user_data").val('');
               }
             }else{
-              console.log(data);
+              // console.log(data);
+              $("#user_error").html('');
               $("#user_info").html(data.data);
             }               
           }

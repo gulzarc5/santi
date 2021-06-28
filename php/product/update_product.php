@@ -24,7 +24,8 @@ if(isset($_POST['update_product']) && !empty($_POST['p_id'])){
     $sgst = $connection->real_escape_string(mysql_entities_fix_string($_POST['sgst']));
     $sgst_percent = $connection->real_escape_string(mysql_entities_fix_string($_POST['sgst_percent']));
     $cash_back = $connection->real_escape_string(mysql_entities_fix_string($_POST['cash_back']));
-    $promotional_bonus = $connection->real_escape_string(mysql_entities_fix_string($_POST['promotional_bonus']));
+    // $promotional_bonus = $connection->real_escape_string(mysql_entities_fix_string($_POST['promotional_bonus']));
+    $regular_customer_price = $connection->real_escape_string(mysql_entities_fix_string($_POST['regular_customer_price']));
     $expiry_date = $connection->real_escape_string(mysql_entities_fix_string($_POST['expiry_date']));
    
 
@@ -84,7 +85,7 @@ if(isset($_POST['update_product']) && !empty($_POST['p_id'])){
         // Image Check section end
         // Update Product 
 
-        $sql_update_product = "UPDATE `product` SET `name`='$name',`mrp`='$mrp',`category_id`='$category',`barcode`='$bar_code',`sub_cat_id`='$sub_category',`description`='$description',`hsn_code` = '$hsn_code',`cost`='$cost',`cash_back` = '$cash_back',`promotional_bonus` = '$promotional_bonus', `cgst` = '$cgst',`cgst_percent` = '$cgst_percent',`sgst` = '$sgst',`sgst_percent` = '$sgst_percent',`price`='$price', `stock`='$stock', `expiry_date` = '$expiry_date' WHERE `id`='$p_id'";
+        $sql_update_product = "UPDATE `product` SET `name`='$name',`mrp`='$mrp',`category_id`='$category',`barcode`='$bar_code',`sub_cat_id`='$sub_category',`description`='$description',`hsn_code` = '$hsn_code',`cost`='$cost',`cash_back` = '$cash_back',`promotional_bonus` = '$promotional_bonus', `cgst` = '$cgst',`cgst_percent` = '$cgst_percent',`sgst` = '$sgst',`sgst_percent` = '$sgst_percent',`price`='$price', `regular_customer_price`='$regular_customer_price',`stock`='$stock', `expiry_date` = '$expiry_date' WHERE `id`='$p_id'";
         // echo $sql_update_product;
         // die();
         if ($res_update_product = $connection->query($sql_update_product)) {

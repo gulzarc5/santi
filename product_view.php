@@ -56,6 +56,7 @@ require_once "include/header.php";
 					<h5 class="col-md-6 col-sm-6 col-xs-12"><strong>Product Cost : </strong> <?= $product_row['cost'];?>  </h5>
 					<h5 class="col-md-6 col-sm-6 col-xs-12"><strong>Product MRP : </strong> <?= $product_row['mrp'];?> </h5>
 					<h5 class="col-md-6 col-sm-6 col-xs-12"><strong>Product Price : </strong> <?= $product_row['price'];?> </h5>
+					<h5 class="col-md-6 col-sm-6 col-xs-12"><strong>Regular Customer Price : </strong> <?= $product_row['regular_customer_price'];?> </h5>
 					<h5 class="col-md-6 col-sm-6 col-xs-12"><strong>Product Cashback : </strong> <?= $product_row['cash_back'];?> </h5>
 					<h5 class="col-md-6 col-sm-6 col-xs-12"><strong>Promotional Bonus : </strong> <?= $product_row['promotional_bonus'];?> </h5>
 					<h5 class="col-md-6 col-sm-6 col-xs-12"><strong>Product Stock : </strong> <?= $product_row['stock'];?> </h5>

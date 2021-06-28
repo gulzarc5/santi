@@ -54,22 +54,22 @@
  					//Fetch Temporary Order Items Row By Row 
  					while ($row_temp_order = $res_temp_order->fetch_assoc()) {
  						//Fetch Product Price For Placing An Order
- 						$sql_price = "SELECT `price`,`stock`,`cgst`,`sgst`,`sub_cat_id`,`cash_back`,`promotional_bonus` FROM `product` WHERE `id`='$row_temp_order[p_id]'";
+ 						$sql_price = "SELECT `price`,`regular_customer_price`,`stock`,`cgst`,`sgst`,`sub_cat_id`,`cash_back`,`promotional_bonus` FROM `product` WHERE `id`='$row_temp_order[p_id]'";
  						if ($res_price = $connection->query($sql_price)) {
  							//Price From Product Table
  							$row_price = $res_price->fetch_assoc();
- 							$price_product = $row_price['price'];
+ 							$price_product = ($user_row['is_regular'] == 2) ? $row_price['regular_customer_price'] : $row_price['price'];
 							$single_price = floatval($price_product) * $row_temp_order['quantity'];
 
 							$single_cgst = floatval($row_price['cgst']) * $row_temp_order['quantity'];
 							$single_sgst = floatval($row_price['sgst']) * $row_temp_order['quantity'];							
 							$single_cashback = floatval($row_price['cash_back']) * $row_temp_order['quantity'];
-							$single_promotional_bonus = floatval($row_price['promotional_bonus']) * $row_temp_order['quantity'];
+							// $single_promotional_bonus = floatval($row_price['promotional_bonus']) * $row_temp_order['quantity'];
 
 							$total_cgst = $total_cgst+$single_cgst;
 							$total_sgst = $total_sgst+$single_sgst;
 							$total_cashback = $total_cashback+$single_cashback;							
-							$total_promotional_bonus = $total_promotional_bonus+$single_promotional_bonus;
+							// $total_promotional_bonus = $total_promotional_bonus+$single_promotional_bonus;
 
  							$total_amount = floatval($total_amount) + ($single_price);
 
@@ -132,9 +132,9 @@
 							cashbackCredit($user_id,$total_cashback,$connection);
 						}
 
-						if (!empty($user_row['parent_id'])) {
-							promotionalCredit($user_row['parent_id'],$total_promotional_bonus,$connection);
-						}
+						// if (!empty($user_row['parent_id'])) {
+						// 	promotionalCredit($user_row['parent_id'],$total_promotional_bonus,$connection);
+						// }
 
 						$sql_cart_delete = "DELETE FROM `temp_invoice` WHERE `employee_id` = '$employee_id'";
 						$connection->query($sql_cart_delete);

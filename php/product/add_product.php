@@ -22,9 +22,19 @@ if(isset($_POST['add_product']) && !empty($_POST['add_product'])){
     $sgst = $connection->real_escape_string(mysql_entities_fix_string($_POST['sgst']));
     $sgst_percent = $connection->real_escape_string(mysql_entities_fix_string($_POST['sgst_percent']));
     $cash_back = $connection->real_escape_string(mysql_entities_fix_string($_POST['cash_back']));
-    $promotional_bonus = $connection->real_escape_string(mysql_entities_fix_string($_POST['promotional_bonus']));
+    // $promotional_bonus = $connection->real_escape_string(mysql_entities_fix_string($_POST['promotional_bonus']));
+    $regular_customer_price = $connection->real_escape_string(mysql_entities_fix_string($_POST['regular_customer_price']));
     $expiry_date = $connection->real_escape_string(mysql_entities_fix_string($_POST['expiry_date']));
     $is_star = $connection->real_escape_string(mysql_entities_fix_string($_POST['star']));
+
+    // $cgst = empty($cgst) ? 0 : $cgst;
+    // $cgst_percent = empty($cgst_percent) ? 0 : $cgst_percent;
+    // $sgst = empty($sgst) ? 0 : $sgst;
+    // $sgst_percent = empty($sgst_percent) ? 0 : $sgst_percent;
+    // $cash_back = empty($cash_back) ? 0 : $cash_back;
+    // $stock = empty($stock) ? 0 : $stock;
+    // $expiry_date = empty($expiry_date) ? NULL : $expiry_date;
+    // echo $expiry_date;
    
    $sql_p_check = "SELECT * FROM `product` WHERE `name`='$name' AND `sub_cat_id`='$sub_category'";
    if ($res_p_check = $connection->query($sql_p_check)) {
@@ -43,6 +53,8 @@ if(isset($_POST['add_product']) && !empty($_POST['add_product'])){
            }
        }
    }
+
+
 
 
     $image = $_FILES['image'];
@@ -79,11 +91,12 @@ if(isset($_POST['add_product']) && !empty($_POST['add_product'])){
     $date = date('Y-m-d');
     $created_at = date("Y-m-d H:i:s");
     if (!empty($sub_category)) {
-        $sql ="INSERT INTO `product`(`id`, `barcode`,`name`, `category_id`, `sub_cat_id`, `description`,`hsn_code`,`cost`,`cash_back`,`promotional_bonus`,`cgst`,`cgst_percent`,`sgst`,`sgst_percent`,`mrp`, `price`, `image`,`stock`, `is_delete`, `is_star_product`, `expiry_date`, `star_added_date`, `created_at`) VALUES (null,'$bar_code','$name','$category','$sub_category','$description','$hsn_code','$cost','$cash_back','$promotional_bonus','$cgst','$cgst_percent','$sgst','$sgst_percent','$mrp','$price','$image_name','$stock','1','$is_star','$expiry_date','$date','$created_at')";
+        $sql ="INSERT INTO `product`(`id`, `barcode`,`name`, `category_id`, `sub_cat_id`, `description`,`hsn_code`,`cost`,`cash_back`,`promotional_bonus`,`cgst`,`cgst_percent`,`sgst`,`sgst_percent`,`mrp`, `price`, `regular_customer_price`,`image`,`stock`, `is_delete`, `is_star_product`, `expiry_date`, `star_added_date`, `created_at`) VALUES (null,'$bar_code','$name','$category','$sub_category','$description','$hsn_code','$cost','$cash_back','0','$cgst','$cgst_percent','$sgst','$sgst_percent','$mrp','$price','$regular_customer_price','$image_name','$stock','1','$is_star','$expiry_date','$date','$created_at')";
     }else{
-         $sql ="INSERT INTO `product`(`id`,`barcode`, `name`, `category_id`, `sub_cat_id`, `description`,`hsn_code`,`cost`,`cash_back`,`promotional_bonus`,`cgst`,`cgst_percent`,`sgst`,`sgst_percent`,`mrp`, `price`, `image`,`stock`, `is_delete`,  `is_star_product`, `expiry_date`,  `star_added_date`, `created_at`) VALUES (null,'$bar_code','$name','$category',null,'$description','$hsn_code','$cost','$cash_back','$promotional_bonus','$cgst','$cgst_percent','$sgst','$sgst_percent','$mrp','$price','$image_name','$stock','1','$is_star','$expiry_date','$date','$created_at')";
+         $sql ="INSERT INTO `product`(`id`,`barcode`, `name`, `category_id`, `sub_cat_id`, `description`,`hsn_code`,`cost`,`cash_back`,`promotional_bonus`,`cgst`,`cgst_percent`,`sgst`,`sgst_percent`,`mrp`, `price`, `regular_customer_price`,`image`,`stock`, `is_delete`,  `is_star_product`, `expiry_date`,  `star_added_date`, `created_at`) VALUES (null,'$bar_code','$name','$category',null,'$description','$hsn_code','$cost','$cash_back','0','$cgst','$cgst_percent','$sgst','$sgst_percent','$mrp','$price','$regular_customer_price','$image_name','$stock','1','$is_star','$expiry_date','$date','$created_at')";
     }
-   
+//    echo $sql;
+//    die();
     if ($result=$connection->query($sql)){
         $product_id = $connection->insert_id;
         $numlength = strlen((string)$product_id);

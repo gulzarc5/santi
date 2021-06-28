@@ -1,4 +1,4 @@
-Purchase <?php
+<?php
   include "include/header.php";
 
   function showMessage($msg){
@@ -130,6 +130,13 @@ Purchase <?php
                   <input type="number" step="any" placeholder="Enter Sale Price"  name="price"  class="form-control col-md-7 col-xs-12" required>
                 </div>
               </div>
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="price">Regular Customer Price <span class="required">*</span>
+                </label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                  <input type="number" step="any" placeholder="Enter Regular Customer Price"  name="regular_customer_price"  class="form-control col-md-7 col-xs-12" required>
+                </div>
+              </div>
 
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">CGST
@@ -165,13 +172,13 @@ Purchase <?php
                 </div>
               </div>
 
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Promotional Bonus
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
                   <input type="number" step="any" placeholder="Enter Promotional Bonus"  name="promotional_bonus"  class="form-control col-md-7 col-xs-12">
                 </div>
-              </div>
+              </div> -->
 
                <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="stock">Stock</label>

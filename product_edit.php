@@ -158,6 +158,14 @@
               </div>
 
               <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="price">Regular Customer Price <span class="required">*</span>
+                </label>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                  <input type="number" step="any" placeholder="Enter Regular Customer Price"  name="regular_customer_price"  class="form-control col-md-7 col-xs-12" required value="<?php echo $product_row['regular_customer_price']; ?>">
+                </div>
+              </div>
+
+              <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">CGST
                 </label>
                 <div class="col-md-4 col-sm-4 col-xs-12">
@@ -191,13 +199,13 @@
                 </div>
               </div>
 
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Promotional Bonus
                 </label>
                 <div class="col-md-8 col-sm-8 col-xs-12">
                   <input type="number" step="any"  name="promotional_bonus" value="<?=$product_row['promotional_bonus']?>"  class="form-control col-md-7 col-xs-12">
                 </div>
-              </div>
+              </div> -->
 
                <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="stock">Stock<span class="required">*</span>

@@ -67,11 +67,12 @@ function mysql_fix_string($string){
                 <h3>General</h3>
                 <ul class="nav side-menu">
                   <li><a href="deshboard.php"><i class="fa fa-home"></i> Home </a></li>
-                  <li><a href="make_invoice_form.php"><i class="fa fa-edit"></i> Order Invoice </span>
-                  <li><a><i class="fa fa-edit"></i> Users <span class="fa fa-chevron-down"></span></a>
+                  <li><a href="make_invoice_form.php"><i class="fa fa-print"></i> Order Invoice </span>
+                  <li><a><i class="fa fa-users"></i> Users <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="add_user_form.php">Add User</a></li>
                       <li><a href="user_list.php">Activated User List</a></li>
+                      <li><a href="user_regular_list.php">Regular Customer List</a></li>
                       <?php 
                         if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 1) {
                       ?>
@@ -84,13 +85,13 @@ function mysql_fix_string($string){
                   <?php 
                     if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 1) {
                   ?>
-                  <li><a><i class="fa fa-edit"></i> Employee <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-empire"></i> Employee <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="add_employee_form.php">Add Employee</a></li>
                       <li><a href="employee_list.php">Employee List</a></li>                  
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-edit"></i> Products <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-product-hunt"></i> Products <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="add_product_form.php">Add Product</a></li>
                       <li><a href="education.php">Product List</a></li>
@@ -99,7 +100,7 @@ function mysql_fix_string($string){
                     </ul>
                   </li>
                   <?php } ?>
-                   <li><a><i class="fa fa-edit"></i>All Orders <span class="fa fa-chevron-down"></span></a>
+                   <li><a><i class="fa fa-list-ol"></i>All Orders <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="order_list.php">Order List</a></li>
                       <?php 
@@ -114,7 +115,7 @@ function mysql_fix_string($string){
                     if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 1) {
                   ?>
 
-                   <li><a><i class="fa fa-edit"></i>Employee Orders <span class="fa fa-chevron-down"></span></a>
+                   <li><a><i class="fa fa-folder-o"></i>Employee Orders <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="employee_orders_list.php">Order List</a></li>
                     </ul>
@@ -122,13 +123,13 @@ function mysql_fix_string($string){
 
                  
 
-                  <li><a><i class="fa fa-edit"></i> Discount <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-heart-o"></i> Discount <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="offer_form.php"> Discount </a></li>
                     </ul>
                   </li>
 
-                  <li><a><i class="fa fa-edit"></i> Product Category <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-object-group"></i> Product Category <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="add_main_category_form.php">Add Main Category</a></li>
                       <li><a href="main_category_list.php">Main Category List</a></li>
@@ -136,13 +137,14 @@ function mysql_fix_string($string){
                       <li><a href="category_list.php">Sub Category List</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-edit"></i> App Slider <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-wpforms"></i> App Slider <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="add_slider_form.php">Add Slider</a></li>
                       <li><a href="slider_list.php">Sliders</a></li>
                     </ul>
                  </li>
-                 <li><a href="customer_review.php"><i class="fa fa-edit"></i> Customers Review </span></a></li>
+                 <li><a href="customer_review.php"><i class="fa fa-exclamation-triangle"></i> Customers Review </span></a></li>
+                 <li><a href="php/corn/regular_customer_check.php"><i class="fa fa-edit"></i> Regular Customer Check </span></a></li>
                  <?php } ?>
                   <!-- <li><a href="star_member_chk.php?page=1" onclick="javascript:return confirm('Are you sure ?? you want to scan manually in the database. if maunaly scan it will not scan automatically in this month')"><i class="fa fa-edit"></i> Star Member Scan</span></a></li> -->
                 

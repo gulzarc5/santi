@@ -63,6 +63,8 @@ if (!empty($request['search']['value'])) {
 			}else{
 				$action = '<a href="user_view.php?u_id='.$row_user['id'].'" class="btn btn-success">View</a>';
 			}
+
+			$action .= '<a href="this_month_order_count.php?u_id='.$row_user['id'].'" class="btn btn-success">Check Order Count</a>';
              $wallet_sql = "SELECT * FROM `wallet` WHERE `user_id`='$row_user[id]' limit 1";
              if ($res_wallet = $connection->query($wallet_sql)) {
              	if ($res_wallet->num_rows > 0) {
